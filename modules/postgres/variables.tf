@@ -1,6 +1,6 @@
 variable SubnetID {
   type        = "list"
-  description = "List of an existing subnet IDs to use for the load balancer and auto"
+  description = "List of an existing subnet IDs to use for the load balancer and auto scaling group"
 }
 
 variable DatabaseName {
@@ -23,7 +23,6 @@ variable MasterUserPassword {
   description = "Password for the DB Root User"
 }
 
-  noecho      = "'true'"
 variable SecurityGroups {
   type        = "commadelimitedlist"
   description = "A list of security group ids, such as sg-a123fd85"
@@ -38,4 +37,3 @@ variable MultiAZDatabase {
   type        = "string"
   description = "Launch the database in multiple availability zones"
 }
-

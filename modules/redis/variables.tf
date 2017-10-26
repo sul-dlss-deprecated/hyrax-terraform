@@ -8,7 +8,7 @@
 
 variable SubnetID {
   type        = "string"
-  description = "List of an existing subnet IDs to use for the load balancer and auto"
+  description = "List of an existing subnet IDs to use for the load balancer and auto scaling group"
 }
 
 variable InstanceType {

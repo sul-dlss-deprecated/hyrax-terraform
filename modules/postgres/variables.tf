@@ -66,5 +66,4 @@ variable StackName {
 ## Temp until vpc done.
 variable vpc_id {
   type    = "string"
-  default = "vpc-d84467b3"
 }

@@ -1,4 +1,9 @@
 # Simple test of the postgres module, seeing if the result is what we expect.
+resource "aws_security_group" "postgresql_test" {
+  vpc_id = "vpc-d84467b3"
+  name   = "Postgresql Access Test"
+}
+
 module postgres {
   source = "../../modules/postgres"
 
@@ -8,5 +13,6 @@ module postgres {
   MasterUserPassword = "changethispassword"
 
   SubnetID            = ""
-  AccessSecurityGroup = "sg-95966def"
+  AccessSecurityGroup = "${aws_security_group.postgresql_test.id}"
+  vpc_id              = "vpc-d84467b3"
 }

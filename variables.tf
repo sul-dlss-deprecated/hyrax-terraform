@@ -1,3 +1,13 @@
+variable "profile" {
+  description = "AWS credentials profile"
+  default = "default"
+}
+
+variable "region" {
+  description = "AWS region to run resources in"
+  default = "us-east-1"
+}
+
 variable KeyName {
   type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
@@ -155,7 +165,6 @@ variable FcrepoMaxSize {
 }
 
 variable SolrCloudSize {
-  type        = "number"
   description = "Number of Solr instances to launch"
   default     = "3"
 }
@@ -167,7 +176,6 @@ variable SolrCloudInstanceType {
 }
 
 variable SolrCloudMaxSize {
-  type        = "number"
   description = "Maximum number of instances that can be launched in your ECS cluster"
   default     = "3"
 }
@@ -179,7 +187,6 @@ variable SolrS3Key {
 }
 
 variable ZookeeperEnsembleSize {
-  type        = "number"
   description = "Number of instances to launch"
   default     = "3"
 }
@@ -215,13 +222,11 @@ variable WorkerInstanceType {
 }
 
 variable WorkerMinSize {
-  type        = "number"
   description = "Minimum number of instances to launch"
   default     = "1"
 }
 
 variable WorkerMaxSize {
-  type        = "number"
   description = "Maximum number of instances to launch"
   default     = "4"
 }
@@ -233,13 +238,11 @@ variable WebappInstanceType {
 }
 
 variable WebappMinSize {
-  type        = "number"
   description = "Minimum number of instances to launch"
   default     = "1"
 }
 
 variable WebappMaxSize {
-  type        = "number"
   description = "Maximum number of instances to launch"
   default     = "4"
 }

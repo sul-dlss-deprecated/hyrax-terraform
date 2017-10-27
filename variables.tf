@@ -8,6 +8,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "private_hosted_zone_name" {
+  description = "Name for private hosted zone for private services"
+  default = "hyrax.sul.stanford.edu"
+}
+
 variable KeyName {
   type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"

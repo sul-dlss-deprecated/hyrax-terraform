@@ -1,6 +1,7 @@
 variable S3Bucket {
   type        = "string"
   description = "S3 Bucket of the deployment artifact"
+  default     = "hybox-deployment-artifacts"
 }
 
 variable S3Key {
@@ -22,4 +23,3 @@ variable WorkerEnvironmentName {
   type        = "string"
   description = "ElasticBeanstalk Application Environment"
 }
-

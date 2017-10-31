@@ -1,3 +1,13 @@
+variable vpc_id {
+  type        = "string"
+  description = "VPC id for resources"
+}
+
+variable region {
+  type        = "string"
+  description = "AWS region to use"
+}
+
 variable AWSRegionToAMI {
   type        = "map"
   description = "AMI to use for each region"
@@ -29,11 +39,12 @@ variable SecurityGroups {
 }
 
 variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
+  type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
 }
 
 variable InstanceType {
   type        = "string"
   description = "The EC2 instance type"
+  default     = "t2.nano"
 }

@@ -1,0 +1,10 @@
+-Dfcrepo.home="${HomePath}"
+-Dfcrepo.postgresql.host="${RDSHostname}"
+-Dfcrepo.postgresql.port="${RDSPort}"
+-Dfcrepo.postgresql.username="${RDSUsername}"
+-Dfcrepo.postgresql.password="${RDSPassword}"
+-Daws.accessKeyId="${BinaryStoreS3AccessKey}"
+-Daws.secretKey="${BinaryStoreS3SecretKey}"
+-Daws.bucket="${BinaryStoreS3Bucket}"
+-Dfcrepo.streaming.parallel=true
+-Dfcrepo.modeshape.configuration="classpath:/config/jdbc-postgresql-s3/repository.json"

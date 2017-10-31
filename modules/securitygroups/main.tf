@@ -86,31 +86,6 @@ resource "aws_security_group" "solr-lb" {
   }
 }
 
-resource "aws_security_group" "fedora" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Fedora security group"
-
-  tags {
-    Name = "${var.StackName}-fcrepo"
-  }
-}
-
-resource "aws_security_group" "fedora-lb" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Fedora load balancer security group"
-
-  ingress {
-    security_groups = ["${var.WebappSecurityGroup}"]
-    from_port       = 80
-    to_port         = 80
-    protocol        = "tcp"
-  }
-
-  tags {
-    Name = "${var.StackName}-fcrepo-lb"
-  }
-}
-
 resource "aws_security_group" "zookeeper-lb" {
   vpc_id = "${var.vpc_id}"
   name   = "Zookeeper load balancer security group"

@@ -1,21 +1,33 @@
+variable vpc_id {
+  type        = "string"
+  description = "VPC to create the resources in"
+}
+
+variable WebappSecurityGroup {
+  type        = "string"
+  description = "Web application security group id"
+}
+
 variable StackName {
   type        = "string"
   description = "Name of the ElasticBeanstalk environment"
 }
 
 variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
+  type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
+  default     = "hybox"
 }
 
 variable SubnetID {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the load balancer and auto"
 }
 
 variable S3Bucket {
   type        = "string"
   description = "S3 bucket with the Fcrepo war"
+  default     = "hybox-deployment-artifacts"
 }
 
 variable S3Key {
@@ -24,38 +36,33 @@ variable S3Key {
 }
 
 variable MinSize {
-  type        = "number"
+  type        = "string"
   description = "Minimum number of instances"
+  default     = "1"
 }
 
 variable MaxSize {
-  type        = "number"
+  type        = "string"
   description = "Maximum number of instances"
-}
-
-variable SecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85"
-}
-
-variable LBSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85"
+  default     = "2"
 }
 
 variable HostedZoneName {
   type        = "string"
   description = "Route53 zone to create an alias in"
+  default     = "hydrainabox.org"
 }
 
 variable InstanceType {
   type        = "string"
   description = "The EC2 instance type"
+  default     = "t2.large"
 }
 
 variable RDSUsername {
   type        = "string"
   description = "Username for Database"
+  default     = "ebroot"
 }
 
 variable RDSPassword {
@@ -63,7 +70,6 @@ variable RDSPassword {
   description = "Password for Database"
 }
 
-  noecho      = "'true'"
 variable RDSHostname {
   type        = "string"
   description = "Hostname for RDS Database"
@@ -77,6 +83,7 @@ variable RDSPort {
 variable HomePath {
   type        = "string"
   description = "Fedora home directory path"
+  default     = "/var/lib/fcrepo"
 }
 
 variable BinaryStoreS3AccessKey {
@@ -89,9 +96,7 @@ variable BinaryStoreS3SecretKey {
   description = "Secret Access Key providing access to binary store S3 bucket"
 }
 
-  noecho      = "'true'"
 variable BinaryStoreS3Bucket {
   type        = "string"
   description = "Binary store S3 bucket"
 }
-

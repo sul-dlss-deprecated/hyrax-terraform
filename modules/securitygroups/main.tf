@@ -22,15 +22,6 @@ resource "aws_security_group" "default" {
   }
 }
 
-resource "aws_security_group" "bastion" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Bastion security group"
-
-  tags {
-    Name = "${var.StackName}-bastion"
-  }
-}
-
 resource "aws_security_group" "webapp" {
   vpc_id = "${var.vpc_id}"
   name   = "Webapp security group"

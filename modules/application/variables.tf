@@ -4,18 +4,21 @@ variable StackName {
 }
 
 variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
+  type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
+  default     = "hybox"
 }
 
 variable S3Bucket {
   type        = "string"
   description = "S3 bucket with cloudformation templates"
+  default     = "hybox-deployment-artifacts"
 }
 
 variable S3BucketEB {
   type        = "string"
   description = "S3 bucket with the hyku zip"
+  default     = "hybox-deployment-artifacts"
 }
 
 variable S3Key {
@@ -29,22 +32,22 @@ variable S3KeyPrefix {
 }
 
 variable WebappMinSize {
-  type        = "number"
+  type        = "string"
   description = "Minimum number of instances"
 }
 
 variable WebappMaxSize {
-  type        = "number"
+  type        = "string"
   description = "Maximum number of instances"
 }
 
 variable WorkerMinSize {
-  type        = "number"
+  type        = "string"
   description = "Minimum number of instances"
 }
 
 variable WorkerMaxSize {
-  type        = "number"
+  type        = "string"
   description = "Maximum number of instances"
 }
 
@@ -71,6 +74,7 @@ variable LBSecurityGroups {
 variable HostedZoneName {
   type        = "string"
   description = "Route53 zone to create an alias in"
+  default     = "hydrainabox.org"
 }
 
 variable SecretKeyBase {
@@ -78,7 +82,6 @@ variable SecretKeyBase {
   description = "Secret key for Rails"
 }
 
-  noecho      = "'true'"
 variable FcrepoUrl {
   type        = "string"
   description = "URL to Fedora"
@@ -107,11 +110,13 @@ variable RedisPort {
 variable RDSDatabaseName {
   type        = "string"
   description = "Database name"
+  default     = "hybox"
 }
 
 variable RDSUsername {
   type        = "string"
   description = "Username for Database"
+  default     = "ebroot"
 }
 
 variable RDSPassword {
@@ -119,7 +124,6 @@ variable RDSPassword {
   description = "Password for Database"
 }
 
-  noecho      = "'true'"
 variable RDSHostname {
   type        = "string"
   description = "Hostname for RDS Database"
@@ -133,16 +137,19 @@ variable RDSPort {
 variable QueuePrefix {
   type        = "string"
   description = "SQS Queue prefix"
+  default     = "hybox"
 }
 
 variable WebappInstanceType {
   type        = "string"
   description = "The EC2 instance type"
+  default     = "t2.large"
 }
 
 variable WorkerInstanceType {
   type        = "string"
   description = "The EC2 instance type"
+  default     = "t2.medium"
 }
 
 variable WebappHealthReportingSystemType {
@@ -163,6 +170,7 @@ variable BeanstalkSNSTopic {
 variable ContinuousDeployment {
   type        = "string"
   description = "Configure continuous deployment for the webapp and workers?"
+  default     = "true"
 }
 
 variable SSLCertificateId {
@@ -178,16 +186,19 @@ variable GoogleAnalyticsId {
 variable EnableOpenSignup {
   type        = "string"
   description = "True to allow open self-signup, false to disable"
+  default     = "true"
 }
 
 variable DisableOpenTenantCreation {
   type        = "string"
   description = "True to restrict tenant creation to admins, false to open creation to any registered users"
+  default     = "false"
 }
 
 variable AccountInvitationFromEmail {
   type        = "string"
   description = "Email address from which account invitations are sent"
+  default     = "hyku-invitations@example.com"
 }
 
 variable ContactEmail {
@@ -198,6 +209,7 @@ variable ContactEmail {
 variable GeonamesUsername {
   type        = "string"
   description = "The registered Geonames account name"
+  default     = "jcoyne"
 }
 
 variable HoneybadgerApiKey {
@@ -209,4 +221,3 @@ variable LogzioKey {
   type        = "string"
   description = "The logz.io key"
 }
-

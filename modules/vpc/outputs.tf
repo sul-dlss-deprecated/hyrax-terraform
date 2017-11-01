@@ -10,17 +10,17 @@ output "default_security_group_id" {
 
 output "private_subnets" {
   description = "List of IDs of private subnets"
-  value       = "${module.hyrax_vpc.private_subnets}"
+  value       = "${join(",", module.hyrax_vpc.private_subnets)}"
 }
 
 output "public_subnets" {
   description = "List of IDs of public subnets"
-  value       = "${module.hyrax_vpc.public_subnets}"
+  value       = "${join(",", module.hyrax_vpc.public_subnets)}"
 }
 
 output "database_subnets" {
   description = "List of IDs of database subnets"
-  value       = "${module.hyrax_vpc.database_subnets}"
+  value       = "${join(",", module.hyrax_vpc.database_subnets)}"
 }
 
 output "database_subnet_group" {
@@ -30,7 +30,7 @@ output "database_subnet_group" {
 
 output "elasticache_subnets" {
   description = "List of IDs of elasticache subnets"
-  value       = "${module.hyrax_vpc.elasticache_subnets}"
+  value       = "${join(",", module.hyrax_vpc.elasticache_subnets)}"
 }
 
 output "elasticache_subnet_group" {

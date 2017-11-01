@@ -1,3 +1,23 @@
+# TODO: Do we need this?  We have a hosted zone name that we use to look up
+#       zone id from, but use both this and that ID for creating route53
+#       records.  Is this ever going to be different from the zone id for the
+#       given zone name, and if so, why?
+variable "AWSRegionToBeanstalkHostedZoneId" {
+  type        = "map"
+  description = "Map of regions to beanstalk hosted zone ID"
+  default     = {
+    us-east-1      = "Z3DZXE0Q79N41H"
+    us-west-1      = "Z1M58G0W56PQJA"
+    us-west-2      = "Z33MTJ483KN6FU"
+    eu-west-1      = "Z3NF1Z3NOM5OY2"
+    eu-central-1   = "Z215JYRZR1TBD5"
+    ap-northeast-1 = "Z2YN17T5R711GT"
+    ap-southeast-1 = "Z1WI8VXHPB1R38"
+    ap-southeast-2 = "Z2999QAZ9SRTIC"
+    sa-east-1      = "Z2ES78Y61JGQKS"
+  }
+}
+
 variable StackName {
   type        = "string"
   description = "Name of the ElasticBeanstalk environment"
@@ -189,4 +209,3 @@ variable LogzioKey {
   type        = "string"
   description = "The logz.io key"
 }
-

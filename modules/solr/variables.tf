@@ -1,70 +1,51 @@
-variable StackName {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk environment"
+variable "application_name" {
+  description = "Name for beanstalk application"
 }
 
-variable ApplicationName {
-  type        = "string"
-  description = "Name of the Solr environment"
+variable "environment_name" {
+  description = "Name for beanstalk environment"
 }
 
-variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
-  description = "Name of an existing EC2 KeyPair to enable SSH access to the EB instances"
+variable "environment_cname" {
+  description = "CNAME for beanstalk environment"
 }
 
-variable MinSize {
-  type        = "number"
-  description = "Minimum number of instances"
+variable "vpc_id" {
+  description = "VPC id to deploy instances in"
 }
 
-variable MaxSize {
-  type        = "number"
-  description = "Maximum number of instances"
+variable "subnets" {
+  description = "Subnets to deploy instances in"
 }
 
-variable InstanceType {
-  type        = "string"
-  description = "The EC2 instance type"
+variable "key_name" {
+  description = "Name of SSH key pair"
 }
 
-variable HealthReportingSystemType {
-  type        = "string"
-  description = "Health reporting system"
+variable "version_label" {
+  description = "Version label from beanstalk_application_version module"
 }
 
-variable S3Bucket {
-  type        = "string"
-  description = "Bucket with Solr source bundle"
+variable "instance_type" {
+  description = "Instance type to deploy"
+  default = "t2.large"
 }
 
-variable S3Key {
-  type        = "string"
-  description = "Key for Solr source bundle"
+variable "ssh_cidr_blocks" {
+  description = "Cidr block for ssh access to the solr instances"
+  default = "10.0.0.0/16"
 }
 
-variable SubnetID {
-  type        = "list"
-  description = "List of an existing subnet IDs to use for the load balancer and auto"
+variable "lb_security_groups" {
+  description = "List of security groups to grant access to loadbalancer on port 80. This will be from the webapp"
+  default = []
+  type = "list"
 }
 
-variable SecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85"
+variable "hosted_zone_name" {
+  description = "Route53 zone name within which to create a solr record"
 }
 
-variable LBSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85"
+variable "zookeeper_hosts" {
+  description = "Route53 round robin DNS record name for zookeeper hosts"
 }
-
-variable ZookeeperHostURL {
-  type        = "string"
-  description = "comma separated list of existing zk hosts"
-}
-
-variable HostedZoneName {
-  type        = "string"
-  description = "Route53 zone to create an alias in"
-}
-

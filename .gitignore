@@ -4,3 +4,4 @@ terraform.tfstate
 terraform.tfstate.backup
 terraform.tfstate.*.backup
 slack.zip
+assets/lambdas/upsert.zip

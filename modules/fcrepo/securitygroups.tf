@@ -23,3 +23,8 @@ resource "aws_security_group" "fedora_lb" {
     Name = "${var.StackName}-fcrepo-lb"
   }
 }
+
+var "SecurityGroupsAll" {
+  description = "Given security groups plus webapp security group"
+  default     = ["${aws_security_group.fedora.id}", "${var.SecurityGroups}"]
+}

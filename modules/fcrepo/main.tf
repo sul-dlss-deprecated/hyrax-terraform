@@ -44,7 +44,7 @@ resource "aws_elastic_beanstalk_configuration_template" "fedora" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.fedora.id}"
+    value     = "${var.SecurityGroupsAll}"
   }
   setting {
     namespace = "aws:autoscaling:loadbalancer"

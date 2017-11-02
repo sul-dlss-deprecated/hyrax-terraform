@@ -1,0 +1,54 @@
+# The application module configures and loads both a worker and webapp stack.
+module "application" {
+  source = "modules/application"
+
+  StackName                       = "${var.StackName}"
+  KeyName                         = "${var.KeyName}"
+  S3Bucket                        = "${var.S3Bucket}"
+  S3BucketEB                      = "${var.S3BucketEB}"
+
+  S3Key                           = "${var.WebappS3Key}"
+  S3KeyPrefix                     = "${var.S3KeyPrefix}"
+  WebappMinSize                   = "${var.WebappMinSize}"
+  WebappMaxSize                   = "${var.WebappMaxSize}"
+  WorkerMinSize                   = "${var.WorkerMinSize}"
+  WorkerMaxSize                   = "${var.WorkerMaxSize}"
+  PublicSubnets                   = "${module.hyrax_vpc.public_subnets}"
+  PrivateSubnets                  = "${module.hyrax_vpc.private_subnets}"
+
+  # TODO: default security group isn't being created, add when done.
+  SecurityGroups                  = ""
+
+  HostedZoneName                  = "${var.PublicZoneName}"
+  SecretKeyBase                   = "${var.SecretKeyBase}"
+
+  # TODO: Add these three when they are created.
+  FcrepoUrl                       = ""
+  SolrUrl                         = ""
+  ZookeeperHosts                  = ""
+
+  RedisHost                       = "${module.redis.EndpointAddress}"
+  RedisPort                       = "${module.redis.EndpointPort}"
+  RDSDatabaseName                 = "${var.DatabaseName}"
+  RDSUsername                     = "${var.DatabaseUsername}"
+  RDSPassword                     = "${var.DatabasePassword}"
+  RDSHostname                     = "${module.postgres.EndpointAddress}"
+  RDSPort                         = "${module.postgres.EndpointPort}"
+  QueuePrefix                     = "${var.QueuePrefix}
+  WebappInstanceType              = "${var.WebappInstanceType}"
+  WorkerInstanceType              = "${var.WorkerInstanceType}"
+
+  WebappHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
+  WorkerHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
+  BeanstalkSNSTopic               = ""
+  ContinuousDeployment            = "${var.ContinuousDeployment}"
+  SSLCertificateId                = "${var.SSLCertificateId}"
+  GoogleAnalyticsId               = "${var.GoogleAnalyticsId}"
+  EnableOpenSignup                = "${var.EnableOpenSignup}"
+  DisableOpenTenantCreation       = "${var.DisableOpenTenantCreation}"
+  AccountInvitationFromEmail      = "${var.AccountInvitationFromEmail}"
+  ContactEmail                    = "${var.ContactEmail}"
+  GeonamesUsername                = "${var.GeonamesUsername}"
+  HoneybadgerApiKey               = "${var.HoneybadgerApiKey}"
+  LogzioKey                       = "${var.LogzioKey}"
+}

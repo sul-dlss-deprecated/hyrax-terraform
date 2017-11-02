@@ -1,3 +1,26 @@
+resource "aws_security_group" "webapp" {
+  vpc_id = "${var.vpc_id}"
+  name   = "Webapp security group"
+
+  tags {
+    Name = "${var.StackName}-webapp"
+  }
+}
+
+resource "aws_security_group" "webapp_lb" {
+  vpc_id = "${var.vpc_id}"
+  name   = "Webapp load balancer security group"
+
+  tags {
+    Name = "${var.StackName}-webapp-lb"
+  }
+}
+
+var "SecurityGroupsAll" {
+  description = "Given security groups plus webapp security group"
+  default     = ["${aws_security_group.webapp.id}", "${var.SecurityGroups}"]
+}
+
 # Load the webapp.  The application and version are set up by what calls the
 # module, and we are just passed the proper names.
 resource "aws_elastic_beanstalk_environment" "webapp" {
@@ -212,12 +235,12 @@ resource "aws_elastic_beanstalk_configuration_template" "webapp" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${var.SecurityGroups}"
+    value     = "${join(",", ${var.SecurityGroupsAll})}"
   }
   setting {
     namespace = "aws:elb:loadbalancer"
     name      = "SecurityGroups"
-    value     = "${var.SecurityGroups}"
+    value     = "${aws_security_group.webapp_lb.id}"
   }
   setting {
     namespace = "aws:elb:loadbalancer"

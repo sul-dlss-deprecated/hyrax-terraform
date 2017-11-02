@@ -22,24 +22,6 @@ resource "aws_security_group" "default" {
   }
 }
 
-resource "aws_security_group" "webapp" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Webapp security group"
-
-  tags {
-    Name = "${var.StackName}-webapp"
-  }
-}
-
-resource "aws_security_group" "webapp-lb" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Webapp load balancer security group"
-
-  tags {
-    Name = "${var.StackName}-webapp-lb"
-  }
-}
-
 resource "aws_security_group" "solr" {
   vpc_id = "${var.vpc_id}"
   name   = "Solr security group"

@@ -1,3 +1,8 @@
+variable vpc_id {
+  type        = "string"
+  description = "VPC identifier"
+}
+
 variable StackName {
   type        = "string"
   description = "Name of the ElasticBeanstalk environment"

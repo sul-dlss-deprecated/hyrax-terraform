@@ -13,6 +13,10 @@ variable "private_hosted_zone_name" {
   default = "hyrax.sul.stanford.edu"
 }
 
+variable "StackName" {
+  description = "Name of the entire stack"
+}
+
 variable KeyName {
   type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"

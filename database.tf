@@ -12,7 +12,7 @@ module "database" {
   AllocatedStorage    = "${var.DatabaseStorageSize}"
   MultiAZDatabase     = "${var.DatabaseMultiAZ}"
   SecurityGroupName   = "RDS security group"
-  AccessSecurityGroup = "${module.application.WebappSecurityGroup}"
+  AccessSecurityGroup = "${aws_security_group.webapp.id}"
 
   # DatabasePassword should be set in terraform.tfvars.
 }
@@ -31,7 +31,7 @@ module "fcrepodb" {
   AllocatedStorage    = "${var.FcrepoDatabaseStorageSize}"
   MultiAZDatabase     = "${var.FcrepoDatabaseMultiAZ}"
   SecurityGroupName   = "Fedora RDS security group"
-  AccessSecurityGroup = "${module.fedora.SecurityGroup}"
+  AccessSecurityGroup = "${aws_security_group.fedora.id}"
 
   # FcrepoDatabasePassword should be set in terraform.tfvars.
 }

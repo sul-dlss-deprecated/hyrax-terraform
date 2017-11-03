@@ -5,9 +5,7 @@ module "fedora" {
   KeyName                = "${var.KeyName}"
   SubnetID               = "${module.hyrax_vpc.private_subnets}"
 
-  # TODO: default security group isn't being created, add when done.
-  SecurityGroups         = ""
-
+  SecurityGroups         = "${aws_security_group.default}"
   S3Bucket               = "${var.S3BucketEB}"
   S3Key                  = "${var.S3FedoraFilename}"
   MinSize                = "${var.FcrepoMinSize}"

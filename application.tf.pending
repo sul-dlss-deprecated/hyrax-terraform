@@ -16,9 +16,7 @@ module "application" {
   PublicSubnets                   = "${module.hyrax_vpc.public_subnets}"
   PrivateSubnets                  = "${module.hyrax_vpc.private_subnets}"
 
-  # TODO: default security group isn't being created, add when done.
-  SecurityGroups                  = ""
-
+  SecurityGroups                  = ["${aws_security_group.webapp.id}", "${aws_security_group.default.id}"]
   HostedZoneName                  = "${var.PublicZoneName}"
   SecretKeyBase                   = "${var.SecretKeyBase}"
 

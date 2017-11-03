@@ -1,14 +1,11 @@
 variable "hosted_zone_name" {
-  description = ""
-  default = "sul.stanford.edu"
+  description = "Hosted Zone name for email records to be created within"
 }
 
 variable "application_domain" {
-  description = ""
-  default = "hyrax.sul.stanford.edu"
+  description = "Domain name for the application"
 }
 
 variable "mail_bucket_name" {
-  description = ""
-  default = "hyrax-mail"
+  description = "Bucket name for receiving emails"
 }

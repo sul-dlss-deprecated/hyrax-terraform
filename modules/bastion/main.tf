@@ -1,15 +1,5 @@
-# Security group that other modules will add rules for.
-resource "aws_security_group" "bastion" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Bastion security group"
-
-  tags {
-    Name = "${var.StackName}-bastion"
-  }
-}
-
 resource "aws_autoscaling_group" "bastion" {
-  vpc_zone_identifier  = "${var.SubnetID}"
+  vpc_zone_identifier  = ["${var.SubnetID}"]
   launch_configuration = "${aws_launch_configuration.bastion.name}"
   min_size             = "1"
   max_size             = "2"

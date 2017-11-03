@@ -6,22 +6,6 @@
 # These will usually reference a vpc_id and possibly another security group
 # that is being granted access.  Adjust variables as needed.
 
-resource "aws_security_group" "default" {
-  vpc_id = "${var.vpc_id}"
-  name   = "Default security group"
-
-  ingress {
-    security_groups = ["${var.BastionSecurityGroup}"]
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-  }
-
-  tags {
-    Name = "${var.StackName}-default"
-  }
-}
-
 resource "aws_security_group" "solr" {
   vpc_id = "${var.vpc_id}"
   name   = "Solr security group"

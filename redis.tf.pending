@@ -1,9 +1,0 @@
-module "redis" {
-  source = "modules/redis"
-
-  StackName           = "${var.StackName}"
-  SubnetID            = "${module.hyrax_vpc.elasticache_subnets}"
-  WebappSecurityGroup = "${aws_security_group.webapp.id}"
-  InstanceType        = "${var.RedisInstanceType}"
-  vpc_id              = "${module.hyrax_vpc.vpc_id}"
-}

@@ -25,20 +25,23 @@ module "application" {
   SolrUrl                         = ""
   ZookeeperHosts                  = ""
 
-  RedisHost                       = "${module.redis.EndpointAddress}"
-  RedisPort                       = "${module.redis.EndpointPort}"
+  RedisHost                       = "${module.hyrax_redis.EndpointAddress}"
+  RedisPort                       = "${module.hyrax_redis.EndpointPort}"
   RDSDatabaseName                 = "${var.DatabaseName}"
   RDSUsername                     = "${var.DatabaseUsername}"
   RDSPassword                     = "${var.DatabasePassword}"
-  RDSHostname                     = "${module.postgres.EndpointAddress}"
-  RDSPort                         = "${module.postgres.EndpointPort}"
+  RDSHostname                     = "${module.hyrax_database.EndpointAddress}"
+  RDSPort                         = "${module.hyrax_database.EndpointPort}"
   QueuePrefix                     = "${var.QueuePrefix}
   WebappInstanceType              = "${var.WebappInstanceType}"
   WorkerInstanceType              = "${var.WorkerInstanceType}"
 
   WebappHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
   WorkerHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
+
+  # TODO: Add these when created.
   BeanstalkSNSTopic               = ""
+
   ContinuousDeployment            = "${var.ContinuousDeployment}"
   SSLCertificateId                = "${var.SSLCertificateId}"
   GoogleAnalyticsId               = "${var.GoogleAnalyticsId}"

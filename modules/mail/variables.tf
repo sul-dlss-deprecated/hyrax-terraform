@@ -1,10 +1,14 @@
-variable Domain {
-  type        = "string"
-  description = "Name of the Route53 RecordSet"
+variable "hosted_zone_name" {
+  description = ""
+  default = "sul.stanford.edu"
 }
 
-variable HostedZoneName {
-  type        = "string"
-  description = "Route53 zone to create an alias in"
+variable "application_domain" {
+  description = ""
+  default = "hyrax.sul.stanford.edu"
 }
 
+variable "mail_bucket_name" {
+  description = ""
+  default = "hyrax-mail"
+}

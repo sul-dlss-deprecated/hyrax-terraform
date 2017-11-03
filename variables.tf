@@ -10,7 +10,12 @@ variable "region" {
 
 variable "private_hosted_zone_name" {
   description = "Name for private hosted zone for private services"
-  default = "hyrax.sul.stanford.edu"
+  default = "hyrax-private.sul.stanford.edu"
+}
+
+variable "public_hosted_zone_name" {
+  description = "Existing Route53 zone; used to create a public DNS record for the application load balancer"
+  default     = "sul.stanford.edu"
 }
 
 variable "StackName" {
@@ -45,12 +50,6 @@ variable WebappS3Key {
   type        = "string"
   description = "S3 key to webapp deployment artifacts"
   default     = "hyku/current/hyku.zip"
-}
-
-variable PublicZoneName {
-  type        = "string"
-  description = "Existing Route53 zone; used to create a public DNS record for the"
-  default     = "hydrainabox.org"
 }
 
 variable DatabaseUsername {

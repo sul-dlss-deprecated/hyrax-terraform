@@ -53,7 +53,13 @@ resource "aws_elastic_beanstalk_environment" "zookeeper" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${join(",", sort(list(aws_security_group.zookeeper_ssh.id,aws_security_group.zookeeper_instance_lb.id,aws_security_group.zookeeper_instance.id)))}"
+    value     = "${join(",", sort(var.instance_security_groups))}"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SSHSourceRestriction"
+    value     = "tcp,22,22,10.0.0.0/16"
   }
 
   setting {
@@ -215,7 +221,7 @@ resource "aws_elastic_beanstalk_environment" "zookeeper" {
   setting {
     namespace = "aws:elb:loadbalancer"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.zookeeper_lb.id}"
+    value     = "${join(",", sort(var.lb_security_groups))}"
   }
 
   setting {

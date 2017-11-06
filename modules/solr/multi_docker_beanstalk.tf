@@ -43,7 +43,13 @@ resource "aws_elastic_beanstalk_environment" "solr" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${join(",", sort(list(aws_security_group.solr_ssh.id,aws_security_group.solr_instance.id)))}"
+    value     = "${join(",", var.instance_security_groups)}"
+  }
+
+  setting {
+    namespace = "aws:autoscaling:launchconfiguration"
+    name      = "SSHSourceRestriction"
+    value     = "tcp,22,22,10.0.0.0/16"
   }
 
   setting {
@@ -193,7 +199,7 @@ resource "aws_elastic_beanstalk_environment" "solr" {
   setting {
     namespace = "aws:elb:loadbalancer"
     name      = "SecurityGroups"
-    value     = "${aws_security_group.solr_lb.id}"
+    value     = "${join(",", var.lb_security_groups)}"
   }
 
   setting {

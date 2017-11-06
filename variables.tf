@@ -10,7 +10,7 @@ variable "region" {
 
 variable "private_hosted_zone_name" {
   description = "Name for private hosted zone for private services"
-  default = "hyrax.sul.stanford.edu"
+  default = "hyrax-private.sul.stanford.edu"
 }
 
 variable "public_hosted_zone_name" {

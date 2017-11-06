@@ -5,7 +5,7 @@ resource "aws_cloudwatch_event_target" "zookeeper_upsert" {
 }
 
 resource "aws_cloudwatch_event_rule" "zookeeper" {
-  name        = "zookeeper-ec2-tracking"
+  name = "zookeeper-ec2-tracking"
 
   event_pattern = <<PATTERN
 {

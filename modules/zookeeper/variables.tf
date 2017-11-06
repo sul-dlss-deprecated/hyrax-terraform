@@ -31,11 +31,6 @@ variable "instance_type" {
   default = "t2.micro"
 }
 
-variable "ssh_cidr_blocks" {
-  description = "Cidr block for ssh access to the zookeeper instances"
-  default = "10.0.0.0/16"
-}
-
 variable "lb_security_groups" {
   description = "List of security groups to grant access to loadbalancer port 2181. This will be from solr and the webapp"
   default = []

@@ -31,13 +31,14 @@ variable "instance_type" {
   default = "t2.large"
 }
 
-variable "ssh_cidr_blocks" {
-  description = "Cidr block for ssh access to the solr instances"
-  default = "10.0.0.0/16"
-}
-
 variable "lb_security_groups" {
   description = "List of security groups to grant access to loadbalancer on port 80. This will be from the webapp"
+  default = []
+  type = "list"
+}
+
+variable "instance_security_groups" {
+  description = "List of security groups to grant access to instances"
   default = []
   type = "list"
 }

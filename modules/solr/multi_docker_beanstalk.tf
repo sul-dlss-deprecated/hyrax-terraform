@@ -10,10 +10,7 @@ resource "aws_elastic_beanstalk_environment" "solr" {
   version_label       = "${var.version_label}"
   solution_stack_name = "${data.aws_elastic_beanstalk_solution_stack.multi_docker.name}"
 
-  timeouts {
-    create = "30m"
-    update = "30m"
-  }
+  wait_for_ready_timeout = "30m"
 
   setting {
     namespace = "aws:autoscaling:asg"

@@ -1,3 +1,13 @@
+data "aws_iam_policy_document" "slack_assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
 data "aws_iam_policy_document" "slack_integration" {
   statement {
     sid = "1"
@@ -31,5 +41,5 @@ resource "aws_iam_policy" "slack_integration" {
 # Add the IAM role to set access for what the integration can do.
 resource "aws_iam_role" "slack_integration" {
   name               = "slack"
-  assume_role_policy = "${aws_iam_policy.slack_integration.id}"
+  assume_role_policy = "${data.aws_iam_policy_document.slack_assume_role.json}"
 }

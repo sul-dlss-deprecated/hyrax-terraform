@@ -68,13 +68,12 @@ module "hyrax_redis" {
   vpc_id              = "${module.hyrax_vpc.vpc_id}"
 }
 
-# TODO: Enable this once the rest of testing is done, for further debugging.
-#module "hyrax_slack" {
-#  source = "modules/slack"
-#
-#  SlackWebhookToken   = "${var.SlackWebhookToken}"
-#  SlackWebhookChannel = "${var.SlackWebhookChannel}"
-#}
+module "hyrax_slack" {
+  source = "modules/slack"
+
+  SlackWebhookToken   = "${var.SlackWebhookToken}"
+  SlackWebhookChannel = "${var.SlackWebhookChannel}"
+}
 
 module "hyrax_zookeeper" {
   source = "modules/zookeeper"
@@ -110,4 +109,80 @@ module "hyrax_solr" {
   instance_security_groups = ["${aws_security_group.solr.id}","${aws_security_group.solr_to_lb.id}"]
   hosted_zone_name         = "${var.private_hosted_zone_name}"
   zookeeper_hosts          = "${module.hyrax_zookeeper.zookeeper_hosts}"
+}
+
+module "hyrax_fedora" {
+  source = "modules/fcrepo"
+
+  vpc_id                 = "${module.hyrax_vpc.vpc_id}"
+  StackName              = "${var.StackName}-fcrepo"
+  KeyName                = "${var.KeyName}"
+  SubnetID               = "${module.hyrax_vpc.private_subnets}"
+
+  SecurityGroups         = ["${aws_security_group.default.id}","${aws_security_group.fedora.id}"]
+  WebappSecurityGroup    = "${aws_security_group.webapp.id}"
+  S3Bucket               = "${var.S3BucketEB}"
+  S3Key                  = "${var.S3FedoraFilename}"
+  MinSize                = "${var.FcrepoMinSize}"
+  MaxSize                = "${var.FcrepoMaxSize}"
+  HostedZoneName         = "${var.public_hosted_zone_name}"
+  InstanceType           = "${var.FcrepoInstanceType}"
+  RDSHostname            = "${module.hyrax_fcrepodb.EndpointAddress}"
+  RDSPort                = "${module.hyrax_fcrepodb.EndpointPort}"
+  RDSUsername            = "${var.FcrepoDatabaseUsername}"
+  RDSPassword            = "${var.FcrepoDatabasePassword}"
+  HomePath               = "${var.FcrepoHomePath}"
+  BinaryStoreS3AccessKey = "${var.FcrepoS3AccessKey}"
+  BinaryStoreS3SecretKey = "${var.FcrepoS3SecretKey}"
+  BinaryStoreS3Bucket    = "${var.FcrepoS3BucketName}"
+}
+
+# The application module configures and loads both a worker and webapp stack.
+module "hyrax_application" {
+  source = "modules/application"
+
+  vpc_id                          = "${module.hyrax_vpc.vpc_id}"
+  region                          = "${var.region}"
+  StackName                       = "${var.StackName}"
+  KeyName                         = "${var.KeyName}"
+  S3Bucket                        = "${var.S3Bucket}"
+  S3BucketEB                      = "${var.S3BucketEB}"
+  S3Key                           = "${var.WebappS3Key}"
+  S3KeyPrefix                     = "${var.S3KeyPrefix}"
+  WebappMinSize                   = "${var.WebappMinSize}"
+  WebappMaxSize                   = "${var.WebappMaxSize}"
+  WorkerMinSize                   = "${var.WorkerMinSize}"
+  WorkerMaxSize                   = "${var.WorkerMaxSize}"
+  PublicSubnets                   = "${module.hyrax_vpc.public_subnets}"
+  PrivateSubnets                  = "${module.hyrax_vpc.private_subnets}"
+  SecurityGroups                  = ["${aws_security_group.webapp.id}", "${aws_security_group.default.id}"]
+  HostedZoneName                  = "${var.public_hosted_zone_name}"
+  SecretKeyBase                   = "${var.SecretKeyBase}"
+
+  FcrepoUrl                       = "${module.hyrax_fedora.URL}"
+  SolrUrl                         = "${module.hyrax_solr.solr_endpoint}"
+  ZookeeperHosts                  = "${module.hyrax_zookeeper.zookeeper_hosts}"
+  RedisHost                       = "${module.hyrax_redis.EndpointAddress}"
+  RedisPort                       = "${module.hyrax_redis.EndpointPort}"
+  RDSDatabaseName                 = "${var.DatabaseName}"
+  RDSUsername                     = "${var.DatabaseUsername}"
+  RDSPassword                     = "${var.DatabasePassword}"
+  RDSHostname                     = "${module.hyrax_database.EndpointAddress}"
+  RDSPort                         = "${module.hyrax_database.EndpointPort}"
+  QueuePrefix                     = "${var.QueuePrefix}"
+  WebappInstanceType              = "${var.WebappInstanceType}"
+  WorkerInstanceType              = "${var.WorkerInstanceType}"
+  WebappHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
+  WorkerHealthReportingSystemType = "${var.BeanstalkHealthReportingSystemType}"
+  BeanstalkSNSTopic               = "${module.hyrax_slack.BeanstalkSNSTopic}"
+  ContinuousDeployment            = "${var.ContinuousDeployment}"
+  SSLCertificateId                = "${var.SSLCertificateId}"
+  GoogleAnalyticsId               = "${var.GoogleAnalyticsId}"
+  EnableOpenSignup                = "${var.EnableOpenSignup}"
+  DisableOpenTenantCreation       = "${var.DisableOpenTenantCreation}"
+  AccountInvitationFromEmail      = "${var.AccountInvitationFromEmail}"
+  ContactEmail                    = "${var.ContactEmail}"
+  GeonamesUsername                = "${var.GeonamesUsername}"
+  HoneybadgerApiKey               = "${var.HoneybadgerApiKey}"
+  LogzioKey                       = "${var.LogzioKey}"
 }

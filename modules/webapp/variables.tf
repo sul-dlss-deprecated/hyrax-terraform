@@ -23,6 +23,11 @@ variable vpc_id {
   description = "VPC identifier"
 }
 
+variable "region" {
+  description = "AWS region to run resources in"
+  default = "us-east-1"
+}
+
 variable StackName {
   type        = "string"
   description = "Name of the ElasticBeanstalk environment"
@@ -39,37 +44,32 @@ variable VersionLabel {
 }
 
 variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
+  type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
 }
 
 variable MinSize {
-  type        = "number"
+  type        = "string"
   description = "Minimum number of instances"
 }
 
 variable MaxSize {
-  type        = "number"
+  type        = "string"
   description = "Maximum number of instances"
 }
 
 variable PublicSubnets {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the load balancer"
 }
 
 variable PrivateSubnets {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the auto scaling group"
 }
 
 variable SecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable LBSecurityGroups {
-  type        = "list"
+  type        = "string"
   description = "A list of security groups, such as sg-a123fd85."
 }
 
@@ -83,7 +83,6 @@ variable SecretKeyBase {
   description = "Secret key for Rails"
 }
 
-  noecho      = "'true'"
 variable FcrepoUrl {
   type        = "string"
   description = "URL to Fedora"
@@ -124,7 +123,6 @@ variable RDSPassword {
   description = "Password for Database"
 }
 
-  noecho      = "'true'"
 variable RDSHostname {
   type        = "string"
   description = "Hostname for RDS Database"

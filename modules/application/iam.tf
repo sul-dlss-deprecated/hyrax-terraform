@@ -11,14 +11,14 @@ data "aws_iam_policy_document" "application_assume_role" {
 data "aws_iam_policy_document" "application_s3" {
   statement {
     actions   = ["s3:*"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.upload.name}"]
+    resources = ["${aws_s3_bucket.upload.arn}"]
   }
 }
 
 resource "aws_iam_policy" "application" {
   name   = "application-policy"
-  role   = "${aws_iam_role.application.id}"
-  policy = "${data.aws_iam_policy_document.application_s3}"
+#  role   = "${aws_iam_role.application.id}"
+  policy = "${data.aws_iam_policy_document.application_s3.json}"
 }
 
 resource "aws_iam_role" "application" {

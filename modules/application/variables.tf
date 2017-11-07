@@ -3,6 +3,11 @@ variable vpc_id {
   description = "VPC identifier"
 }
 
+variable "region" {
+  description = "AWS region to run resources in"
+  default = "us-east-1"
+}
+
 variable StackName {
   type        = "string"
   description = "Name of the ElasticBeanstalk environment"
@@ -57,21 +62,16 @@ variable WorkerMaxSize {
 }
 
 variable PublicSubnets {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the load balancer"
 }
 
 variable PrivateSubnets {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the auto scaling group"
 }
 
 variable SecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable LBSecurityGroups {
   type        = "list"
   description = "A list of security groups, such as sg-a123fd85."
 }

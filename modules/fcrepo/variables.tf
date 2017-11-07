@@ -3,6 +3,11 @@ variable vpc_id {
   description = "VPC to create the resources in"
 }
 
+variable SecurityGroups {
+  type        = "list"
+  description = "Security groups to access fedora"
+}
+
 variable WebappSecurityGroup {
   type        = "string"
   description = "Web application security group id"

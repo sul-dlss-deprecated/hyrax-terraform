@@ -74,7 +74,7 @@ resource "aws_elastic_beanstalk_environment" "webapp" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "SETTINGS__MULTITENANCY__DEFAULT_HOST"
-    value     = "${var.tenant}.${var.StackName}.${var.HostedZoneName}"
+    value     = "%{tenant}.${var.StackName}.${var.HostedZoneName}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
@@ -191,7 +191,7 @@ resource "aws_elastic_beanstalk_configuration_template" "webapp" {
   name                = "${var.StackName}-webapp-template"
   description         = "Hybox configuration template"
   application         = "${var.ApplicationName}"
-  solution_stack_name = "64bit Amazon Linux 2017.03 v2.5.0 running Ruby 2.3 (Puma)"
+  solution_stack_name = "64bit Amazon Linux 2017.09 v2.6.0 running Ruby 2.3 (Puma)"
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
@@ -234,14 +234,14 @@ resource "aws_elastic_beanstalk_configuration_template" "webapp" {
     value     = "true"
   }
   setting {
-    namespace = "aws:elb:loadbalancer"
+    namespace = "aws:elb:policies"
     name      = "ConnectionDrainingEnabled"
     value     = "true"
   }
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "${aws_iam_instance_profile.webapp.name}"
+    value     = "${var.IamInstanceProfile}"
   }
   setting {
     namespace = "aws:autoscaling:asg"

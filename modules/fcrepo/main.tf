@@ -44,10 +44,10 @@ resource "aws_elastic_beanstalk_configuration_template" "fedora" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "SecurityGroups"
-    value     = "${var.SecurityGroupsAll}"
+    value     = "${join(",", var.SecurityGroups)}"
   }
   setting {
-    namespace = "aws:autoscaling:loadbalancer"
+    namespace = "aws:elb:loadbalancer"
     name      = "SecurityGroups"
     value     = "${aws_security_group.fedora_lb.id}"
   }
@@ -118,8 +118,53 @@ resource "aws_elastic_beanstalk_configuration_template" "fedora" {
   }
   setting {
     namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
-    name      = "JVM Options"
-    value     = "${data.template_file.java_config.rendered}"
+    name      = "Dfcrepo.home"
+    value     = "\"${var.HomePath}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.postgresql.host"
+    value     = "\"${var.RDSHostname}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.postgresql.port"
+    value     = "\"${var.RDSPort}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.postgresql.username"
+    value     = "\"${var.RDSUsername}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.postgresql.password"
+    value     = "\"${var.RDSPassword}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Daws.accessKeyId"
+    value     = "\"${var.BinaryStoreS3AccessKey}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Daws.secretKey"
+    value     = "\"${var.BinaryStoreS3SecretKey}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Daws.bucket"
+    value     = "\"${var.BinaryStoreS3Bucket}\""
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.streaming.parallel"
+    value     = "true"
+  }
+  setting {
+    namespace = "aws:elasticbeanstalk:container:tomcat:jvmoptions"
+    name      = "Dfcrepo.modeshape.configuration"
+    value     = "\"classpath:/config/jdbc-postgresql-s3/repository.json\""
   }
   setting {
     namespace = "aws:elasticbeanstalk:application"
@@ -130,21 +175,5 @@ resource "aws_elastic_beanstalk_configuration_template" "fedora" {
     namespace = "aws:elb:listener:80"
     name      = "ListenerProtocol"
     value     = "HTTP"
-  }
-}
-
-# Configuration for the java settings.
-data "template_file" "java_config" {
-  template = "${file("${path.module}/java.tpl")}"
-
-  vars = {
-    HomePath               = "${var.HomePath}"
-    RDSHostname            = "${var.RDSHostname}"
-    RDSPort                = "${var.RDSPort}"
-    RDSUsername            = "${var.RDSUsername}"
-    RDSPassword            = "${var.RDSPassword}"
-    BinaryStoreS3AccessKey = "${var.BinaryStoreS3AccessKey}"
-    BinaryStoreS3SecretKey = "${var.BinaryStoreS3SecretKey}"
-    BinaryStoreS3Bucket    = "${var.BinaryStoreS3Bucket}"
   }
 }

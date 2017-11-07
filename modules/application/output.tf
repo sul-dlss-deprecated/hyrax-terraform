@@ -26,10 +26,6 @@ output "URL" {
   value = "${module.webapp.URL}"
 }
 
-output "WebappSecurityGroup" {
-  value = "${module.webapp.SecurityGroup}"
-}
-
 output "WebappLBSecurityGroup" {
   value = "${module.webapp.SecurityGroupLB}"
 }

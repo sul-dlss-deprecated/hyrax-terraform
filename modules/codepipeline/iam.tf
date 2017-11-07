@@ -2,11 +2,11 @@
 data "aws_iam_policy_document" "codepipeline" {
   statement {
     actions = [
-      "arn:aws:s3:::codepipeline*",
-      "arn:aws:s3:::elasticbeanstalk"
+      "s3:PutObject"
     ]
     resources = [
-      "s3:PutObject"
+      "arn:aws:s3:::codepipeline*",
+      "arn:aws:s3:::elasticbeanstalk"
     ]
   }
 

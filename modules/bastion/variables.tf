@@ -29,7 +29,7 @@ variable StackName {
 }
 
 variable SubnetID {
-  type        = "list"
+  type        = "string"
   description = "List of an existing subnet IDs to use for the load balancer and auto"
 }
 

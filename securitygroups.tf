@@ -19,6 +19,13 @@ resource "aws_security_group" "bastion" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
   name   = "Bastion security group"
 
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags {
     Name = "${var.StackName}-bastion"
   }

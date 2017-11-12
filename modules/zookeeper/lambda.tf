@@ -22,7 +22,7 @@ resource "aws_lambda_function" "zookeeper_lambda_route53_upsert" {
   timeout = "10"
 
   vpc_config {
-    subnet_ids         = ["${split(",", var.subnets)}"]
+    subnet_ids         = ["${var.subnets}"]
     security_group_ids = ["${aws_security_group.lambda_egress.id}"]
   }
 

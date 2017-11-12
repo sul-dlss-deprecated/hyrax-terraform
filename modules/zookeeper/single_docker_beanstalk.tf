@@ -43,7 +43,7 @@ resource "aws_elastic_beanstalk_environment" "zookeeper" {
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
     name      = "IamInstanceProfile"
-    value     = "aws-elasticbeanstalk-ec2-role"
+    value     = "${aws_iam_instance_profile.zookeeper_profile.id}"
   }
 
   setting {
@@ -127,7 +127,7 @@ resource "aws_elastic_beanstalk_environment" "zookeeper" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = "${var.subnets}"
+    value     = "${join(",", var.subnets)}"
   }
 
   setting {
@@ -139,7 +139,7 @@ resource "aws_elastic_beanstalk_environment" "zookeeper" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${var.subnets}"
+    value     = "${join(",", var.subnets)}"
   }
 
   setting {

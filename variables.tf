@@ -18,6 +18,11 @@ variable "public_hosted_zone_name" {
   default     = "sul.stanford.edu"
 }
 
+variable "key_name" {
+  description = "Name of an existing EC2 KeyPair to enable SSH access to instances"
+  default     = "hybox"
+}
+
 variable "StackName" {
   description = "Name of the entire stack"
   default = "Testing"

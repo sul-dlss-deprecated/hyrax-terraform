@@ -6,64 +6,48 @@
 #  description = "A list of security group ids, such as sg-a123fd85"
 #}
 
-variable SubnetID {
-  type        = "string"
-  description = "List of an existing subnet IDs to use for the load balancer and auto scaling group"
+variable "vpc_id" {
+  description = "VPC id to deploy database in"
 }
 
-variable DatabaseName {
-  type        = "string"
+variable "subnet_group_name" {
+  description = "Name of an existing databse subnet group"
+}
+
+variable "name" {
   description = "Name of the database"
-  default     = "hybox"
 }
 
-variable MasterUsername {
-  type        = "string"
+variable "username" {
   description = "Database Root Username"
-  default     = "ebroot"
+  default     = "root"
 }
 
-variable MasterUserPassword {
-  type        = "string"
+variable "password" {
   description = "Password for the DB Root User"
 }
 
-variable DBInstanceClass {
-  type        = "string"
+variable "instance_class" {
   description = "Instance size"
   default     = "db.t2.medium"
 }
 
-variable AllocatedStorage {
-  type        = "string"
-  description = "Size of DB in Gigs"
-  default     = "5"
+variable "allocated_storage" {
+  description = "Size of database storage in GBs"
+  default     = 5
 }
 
-variable MultiAZDatabase {
-  type        = "string"
+variable "multi_az" {
   description = "Launch the database in multiple availability zones"
-  default     = "true"
+  default     = true
 }
 
-variable SecurityGroupName {
-  type        = "string"
-  description = "Name of the security group created"
-  default     = "RDS security group"
+variable "security_group_name" {
+  description = "Name of the security group to create"
 }
 
-variable AccessSecurityGroup {
-  type        = "string"
-  description = "Security group to give access to this database"
-  default     = ""
-}
-
-variable StackName {
-  type        = "string"
-  description = "Name of the environment"
-}
-
-## Temp until vpc done.
-variable vpc_id {
-  type    = "string"
+variable "access_security_groups" {
+  description = "Security groups to give access to this database"
+  default = []
+  type = "list"
 }

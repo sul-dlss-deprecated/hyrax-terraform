@@ -27,13 +27,12 @@ data "aws_region" "current" {
 }
 
 resource "aws_cloudformation_stack" "bastion" {
-  name = "bastion-asg"
+  name = "bastion-asg-${var.vpc_id}"
   timeout_in_minutes = 20
 
   parameters {
     LaunchConfigurationName = "${aws_launch_configuration.bastion.name}"
-    VPCZoneIdentifier = "${var.SubnetID}"
-    StackName = "${var.StackName}"
+    VPCZoneIdentifier = "${join(",", var.subnets)}"
   }
 
   template_body = <<STACK
@@ -44,9 +43,6 @@ resource "aws_cloudformation_stack" "bastion" {
     },
     "VPCZoneIdentifier" : {
       "Type" : "CommaDelimitedList"
-    },
-    "StackName" : {
-      "Type" : "String"
     }
   },
   "Resources" : {
@@ -61,7 +57,7 @@ resource "aws_cloudformation_stack" "bastion" {
         "Tags" : [
           {
             "Key" : "Name",
-            "Value" : { "Ref" : "StackName" },
+            "Value" : "bastion-asg",
             "PropagateAtLaunch" : "true"
           }
         ]
@@ -88,14 +84,14 @@ STACK
 resource "aws_launch_configuration" "bastion" {
   name_prefix     = "bastion-lc-"
   image_id        = "${data.aws_ami.amazon_linux.id}"
-  instance_type   = "${var.InstanceType}"
-  security_groups = ["${var.SecurityGroups}"]
-  key_name        = "${var.KeyName}"
+  instance_type   = "${var.instance_type}"
+  security_groups = ["${var.security_groups}"]
+  key_name        = "${var.key_name}"
 
   user_data = <<EOF
 #!/bin/bash -xe
 yum update -y
-/opt/aws/bin/cfn-signal -e $? --stack bastion-asg --resource BastionAsg --region ${data.aws_region.current.name}
+/opt/aws/bin/cfn-signal -e $? --stack bastion-asg-${var.vpc_id} --resource BastionAsg --region ${data.aws_region.current.name}
 EOF
 
   associate_public_ip_address = true

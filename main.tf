@@ -13,15 +13,12 @@ module "hyrax_mail" {
 }
 
 module "hyrax_bastion" {
-  source = "modules/bastion"
+  source = "./modules/bastion"
 
-  vpc_id         = "${module.hyrax_vpc.vpc_id}"
-  region         = "${var.region}"
-  StackName      = "${var.StackName}"
-  SubnetID       = ["${module.hyrax_vpc.public_subnets}"]
-  SecurityGroups = ["${list(aws_security_group.bastion.id)}"]
-  KeyName        = "${var.KeyName}"
-  InstanceType   = "${var.BastionInstanceType}"
+  vpc_id          = "${module.hyrax_vpc.vpc_id}"
+  subnets         = ["${module.hyrax_vpc.public_subnets}"]
+  security_groups = ["${aws_security_group.bastion.id}"]
+  key_name        = "${var.key_name}"
 }
 
 module "hyrax_database" {

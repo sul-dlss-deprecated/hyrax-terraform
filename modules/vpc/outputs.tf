@@ -10,17 +10,17 @@ output "default_security_group_id" {
 
 output "private_subnets" {
   description = "List of IDs of private subnets"
-  value       = "${join(",", module.hyrax_vpc.private_subnets)}"
+  value       = "${module.hyrax_vpc.private_subnets}"
 }
 
 output "public_subnets" {
   description = "List of IDs of public subnets"
-  value       = "${join(",", module.hyrax_vpc.public_subnets)}"
+  value       = "${module.hyrax_vpc.public_subnets}"
 }
 
 output "database_subnets" {
   description = "List of IDs of database subnets"
-  value       = "${join(",", module.hyrax_vpc.database_subnets)}"
+  value       = "${module.hyrax_vpc.database_subnets}"
 }
 
 output "database_subnet_group" {
@@ -30,7 +30,7 @@ output "database_subnet_group" {
 
 output "elasticache_subnets" {
   description = "List of IDs of elasticache subnets"
-  value       = "${join(",", module.hyrax_vpc.elasticache_subnets)}"
+  value       = "${module.hyrax_vpc.elasticache_subnets}"
 }
 
 output "elasticache_subnet_group" {
@@ -46,6 +46,11 @@ output "nat_public_ips" {
 output "vpc_endpoint_s3_id" {
   description = "The ID of VPC endpoint for S3"
   value       = "${module.hyrax_vpc.vpc_endpoint_s3_id}"
+}
+
+output "private_hosted_zone_name" {
+  description = "The name of the private hosted zone"
+  value       = "${aws_route53_zone.hyrax.name}"
 }
 
 output "private_hosted_zone_id" {

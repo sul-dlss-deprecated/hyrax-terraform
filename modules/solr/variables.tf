@@ -16,6 +16,7 @@ variable "vpc_id" {
 
 variable "subnets" {
   description = "Subnets to deploy instances in"
+  type = "list"
 }
 
 variable "key_name" {
@@ -44,6 +45,10 @@ variable "instance_security_groups" {
 }
 
 variable "hosted_zone_name" {
+  description = "Route53 zone name within which to create a solr record"
+}
+
+variable "hosted_zone_id" {
   description = "Route53 zone name within which to create a solr record"
 }
 

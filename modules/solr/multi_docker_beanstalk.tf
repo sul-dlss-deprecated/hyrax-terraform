@@ -117,7 +117,7 @@ resource "aws_elastic_beanstalk_environment" "solr" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "ELBSubnets"
-    value     = "${var.subnets}"
+    value     = "${join(",", var.subnets)}"
   }
 
   setting {
@@ -129,7 +129,7 @@ resource "aws_elastic_beanstalk_environment" "solr" {
   setting {
     namespace = "aws:ec2:vpc"
     name      = "Subnets"
-    value     = "${var.subnets}"
+    value     = "${join(",", var.subnets)}"
   }
 
   setting {

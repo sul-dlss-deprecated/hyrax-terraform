@@ -1,12 +1,6 @@
-# Get existing zone information.
-data "aws_route53_zone" "fedora" {
-  name = "${var.HostedZoneName}"
-}
-
-# Zone information
 resource "aws_route53_record" "fedora" {
-  name    = "fcrepo.${data.aws_route53_zone.fedora.zone_id}"
-  zone_id = "${data.aws_route53_zone.fedora.zone_id}"
+  name    = "fcrepo.${var.hosted_zone_name}"
+  zone_id = "${var.hosted_zone_id}"
   type    = "CNAME"
   ttl     = "900"
   records = [

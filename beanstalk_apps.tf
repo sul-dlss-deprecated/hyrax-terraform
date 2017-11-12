@@ -50,3 +50,23 @@ resource "aws_elastic_beanstalk_application_version" "solr" {
 
   depends_on = ["aws_s3_bucket_object.solr"]
 }
+
+resource "aws_s3_bucket_object" "fedora" {
+  bucket = "${aws_s3_bucket.beanstalk_source_bundles.id}"
+  key    = "fedora/fcrepo-4.8.0.war"
+  source = "assets/fcrepo-4.8.0.war"
+
+  tags {
+    Terraform = "true"
+  }
+}
+
+resource "aws_elastic_beanstalk_application_version" "fedora" {
+  name        = "4.8.0"
+  application = "${aws_elastic_beanstalk_application.hyrax.name}"
+  bucket       = "${aws_s3_bucket.beanstalk_source_bundles.id}"
+  key          = "${aws_s3_bucket_object.fedora.key}"
+  force_delete = true
+
+  depends_on = ["aws_s3_bucket_object.fedora"]
+}

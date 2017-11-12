@@ -44,6 +44,25 @@ module "hyrax_solrcloud" {
   solr_instance_security_groups = ["${aws_security_group.solr.id}","${aws_security_group.solr_to_lb.id}"]
 }
 
+module "hyrax_fedora" {
+  source = "./modules/fcrepo"
+
+  application_name  = "${aws_elastic_beanstalk_application.hyrax.name}"
+  environment_cname = "hyrax-fedora-demo"
+
+  vpc_id  = "${module.hyrax_vpc.vpc_id}"
+  subnets = "${module.hyrax_vpc.private_subnets}"
+  db_subnet_group_name = "${module.hyrax_vpc.database_subnet_group}"
+
+  key_name                 = "${var.key_name}"
+  version_label            = "${aws_elastic_beanstalk_application_version.fedora.name}"
+  hosted_zone_name         = "${module.hyrax_vpc.private_hosted_zone_name}"
+  hosted_zone_id           = "${module.hyrax_vpc.private_hosted_zone_id}"
+  instance_security_groups = ["${aws_security_group.fedora.id}"]
+  lb_security_groups       = ["${aws_security_group.fedora_lb.id}"]
+  db_password              = "${var.fcrepo_db_password}"
+}
+
 module "hyrax_database" {
   source = "modules/postgres"
 
@@ -95,3 +114,29 @@ module "hyrax_redis" {
 #  SlackWebhookToken   = "${var.SlackWebhookToken}"
 #  SlackWebhookChannel = "${var.SlackWebhookChannel}"
 #}
+
+module "hyrax_fedora" {
+  source = "modules/fcrepo"
+
+  application_name  = "${aws_elastic_beanstalk_application.hyrax.name}"
+  environment_name  = "fedora"
+  environment_cname = "hyrax-fedora-demo"
+
+  vpc_id                 = "${module.hyrax_vpc.vpc_id}"
+  SubnetID               = "${module.hyrax_vpc.private_subnets}"
+
+  KeyName                = "${var.KeyName}"
+  version_label          = "${aws_elastic_beanstalk_application_version.fedora.name}"
+  SecurityGroups         = ["${aws_security_group.default.id}","${aws_security_group.fedora.id}"]
+  WebappSecurityGroup    = "${aws_security_group.webapp.id}"
+  LBSecurityGroups       = ["${aws_security_group.fedora_lb.id}"]
+  MinSize                = "${var.FcrepoMinSize}"
+  MaxSize                = "${var.FcrepoMaxSize}"
+  HostedZoneName         = "${var.public_hosted_zone_name}"
+  InstanceType           = "${var.FcrepoInstanceType}"
+  RDSHostname            = "${module.hyrax_fcrepodb.EndpointAddress}"
+  RDSPort                = "${module.hyrax_fcrepodb.EndpointPort}"
+  RDSUsername            = "${var.FcrepoDatabaseUsername}"
+  RDSPassword            = "${var.FcrepoDatabasePassword}"
+  StackName              = "${var.StackName}-fcrepo"
+}

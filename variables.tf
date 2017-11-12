@@ -23,9 +23,8 @@ variable "key_name" {
   default     = "hybox"
 }
 
-variable "StackName" {
-  description = "Name of the entire stack"
-  default = "Testing"
+variable "fcrepo_db_password" {
+  default = "changeme"
 }
 
 variable KeyName {
@@ -94,88 +93,10 @@ variable BeanstalkHealthReportingSystemType {
   default     = "enhanced"
 }
 
-variable FcrepoDatabaseUsername {
-  type        = "string"
-  description = "Database Root Username"
-  default     = "ebroot"
-}
-
-variable FcrepoDatabasePassword {
-  type        = "string"
-  description = "Password for the DB Root User"
-  default     = ""
-}
-
-variable FcrepoDatabaseName {
-  type        = "string"
-  description = "Name of the database"
-  default     = "fcrepo"
-}
-
-variable FcrepoDatabaseStorageSize {
-  type        = "string"
-  description = "Size of DB in Gigs"
-  default     = "5"
-}
-
-variable FcrepoDatabaseMultiAZ {
-  type        = "string"
-  description = "Launch the database in multiple availability zones"
-  default     = "true"
-}
-
-variable FcrepoHomePath {
-  type        = "string"
-  description = "Fcrepo home directory path"
-  default     = "/var/lib/fcrepo"
-}
-
-variable FcrepoS3AccessKey {
-  type        = "string"
-  description = "Access Key Id for IAM user with access to Fcrepo bucket"
-  default     = ""
-}
-
-variable FcrepoS3SecretKey {
-  type        = "string"
-  description = "Secret Access Key for IAM user with access to Fcrepo bucket"
-  default     = ""
-}
-
-variable FcrepoS3BucketName {
-  type        = "string"
-  description = "Name of S3 bucket for Fedora binary content"
-  default     = ""
-}
-
 variable SecretKeyBase {
   type        = "string"
   description = "Secret key for Rails"
   default     = ""
-}
-
-variable FcrepoInstanceType {
-  type        = "string"
-  description = "Instance type to launch"
-  default     = "t2.large"
-}
-
-variable S3FedoraFilename {
-  type        = "string"
-  description = "S3 key to the Fcrepo war"
-  default     = "fcrepo-webapp-4.8.0-SNAPSHOT.war"
-}
-
-variable FcrepoMinSize {
-  type        = "string"
-  description = "Minimum number of Fedora instances to launch"
-  default     = "1"
-}
-
-variable FcrepoMaxSize {
-  type        = "string"
-  description = "Maximum number of Fedora instances to launch"
-  default     = "2"
 }
 
 variable SolrCloudSize {
@@ -274,12 +195,6 @@ variable BastionInstanceType {
 }
 
 variable DatabaseInstanceType {
-  type        = "string"
-  description = "Instance type to launch"
-  default     = "db.t2.medium"
-}
-
-variable FcrepoDatabaseInstanceType {
   type        = "string"
   description = "Instance type to launch"
   default     = "db.t2.medium"

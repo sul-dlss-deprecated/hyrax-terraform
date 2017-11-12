@@ -1,102 +1,82 @@
-variable vpc_id {
-  type        = "string"
+variable "application_name" {
+  description = ""
+}
+
+variable "environment_name" {
+  description = ""
+  default = "fedora"
+}
+
+variable "environment_cname" {
+  description = ""
+}
+
+variable "version_label" {
+  description = ""
+}
+
+variable "vpc_id" {
   description = "VPC to create the resources in"
 }
 
-variable WebappSecurityGroup {
-  type        = "string"
-  description = "Web application security group id"
+variable "subnets" {
+  description = "Comma separated list of an existing subnet IDs to use for the load balancer and instances"
+  type = "list"
 }
 
-variable StackName {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk environment"
-}
-
-variable KeyName {
-  type        = "string"
-  description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
-  default     = "hybox"
-}
-
-variable SubnetID {
-  type        = "string"
-  description = "List of an existing subnet IDs to use for the load balancer and auto"
-}
-
-variable S3Bucket {
-  type        = "string"
-  description = "S3 bucket with the Fcrepo war"
-  default     = "hybox-deployment-artifacts"
-}
-
-variable S3Key {
-  type        = "string"
-  description = "S3 key to the Fcrepo war"
-}
-
-variable MinSize {
-  type        = "string"
-  description = "Minimum number of instances"
-  default     = "1"
-}
-
-variable MaxSize {
-  type        = "string"
-  description = "Maximum number of instances"
-  default     = "2"
-}
-
-variable HostedZoneName {
-  type        = "string"
+variable "hosted_zone_name" {
   description = "Route53 zone to create an alias in"
-  default     = "hydrainabox.org"
 }
 
-variable InstanceType {
-  type        = "string"
-  description = "The EC2 instance type"
-  default     = "t2.large"
+variable "hosted_zone_id" {
+  description = "Route53 zone id to create an alias in"
 }
 
-variable RDSUsername {
-  type        = "string"
-  description = "Username for Database"
-  default     = "ebroot"
+variable "lb_security_groups" {
+  type        = "list"
+  description = "Security groups to access fedora LB"
+  default = []
 }
 
-variable RDSPassword {
-  type        = "string"
-  description = "Password for Database"
+variable "instance_security_groups" {
+  type        = "list"
+  description = "Security groups to access fedora instances"
+  default = []
 }
 
-variable RDSHostname {
-  type        = "string"
-  description = "Hostname for RDS Database"
+variable "key_name" {
+  description = "Name of an existing EC2 KeyPair to enable SSH access to instances"
 }
 
-variable RDSPort {
-  type        = "string"
-  description = "Database Port"
-}
-
-variable HomePath {
-  type        = "string"
-  description = "Fedora home directory path"
-  default     = "/var/lib/fcrepo"
-}
-
-variable BinaryStoreS3AccessKey {
-  type        = "string"
-  description = "Access Key Id providing access to binary store S3 bucket"
-}
-
-variable BinaryStoreS3SecretKey {
-  type        = "string"
-  description = "Secret Access Key providing access to binary store S3 bucket"
-}
-
-variable BinaryStoreS3Bucket {
-  type        = "string"
+variable "fedora_bucket_name" {
   description = "Binary store S3 bucket"
+  default = "hyrax-fedora-binaries"
+}
+
+variable "min_size" {
+  description = "Minimum number of instances"
+  default = 1
+}
+
+variable "max_size" {
+  description = "Maximum number of instances"
+  default = 1
+}
+
+variable "instance_type" {
+  description = "The EC2 instance type"
+  default = "t2.large"
+}
+
+variable "db_name" {
+  description = "Name for fedora database"
+  default = "fcrepo"
+}
+
+variable "db_password" {
+  description = "Password for fedora database"
+}
+
+variable "db_subnet_group_name" {
+  description = "Database subnet group name from VPC module"
 }

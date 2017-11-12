@@ -49,6 +49,22 @@ resource "aws_security_group" "fedora" {
   }
 }
 
+resource "aws_security_group" "fedora_lb" {
+  vpc_id = "${module.hyrax_vpc.vpc_id}"
+  name   = "${module.hyrax_vpc.vpc_id}-fedora-lb"
+
+  ingress {
+    security_groups = ["${aws_security_group.webapp.id}"]
+    from_port       = 80
+    to_port         = 80
+    protocol        = "tcp"
+  }
+
+  tags {
+    Name = "${module.hyrax_vpc.vpc_id}-fedora-lb"
+  }
+}
+
 resource "aws_security_group" "solr" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
   name   = "${module.hyrax_vpc.vpc_id}-solr"

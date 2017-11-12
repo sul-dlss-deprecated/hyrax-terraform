@@ -1,7 +1,7 @@
 # Create these security groups at top level to avoid dependancy loops.
 resource "aws_security_group" "default" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Default security group"
+  name   = "${module.hyrax_vpc.vpc_id}-default"
 
   ingress {
     security_groups = ["${aws_security_group.bastion.id}"]
@@ -11,13 +11,13 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "${var.StackName}-default"
+    Name = "${module.hyrax_vpc.vpc_id}-default"
   }
 }
 
 resource "aws_security_group" "bastion" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Bastion security group"
+  name   = "${module.hyrax_vpc.vpc_id}-bastion"
 
   egress {
     from_port = 0
@@ -27,31 +27,31 @@ resource "aws_security_group" "bastion" {
   }
 
   tags {
-    Name = "${var.StackName}-bastion"
+    Name = "${module.hyrax_vpc.vpc_id}-bastion"
   }
 }
 
 resource "aws_security_group" "webapp" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Webapp security group"
+  name   = "${module.hyrax_vpc.vpc_id}-webapp"
 
   tags {
-    Name = "${var.StackName}-webapp"
+    Name = "${module.hyrax_vpc.vpc_id}-webapp"
   }
 }
 
 resource "aws_security_group" "fedora" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Fedora security group"
+  name   = "${module.hyrax_vpc.vpc_id}-fedora"
 
   tags {
-    Name = "${var.StackName}-fcrepo"
+    Name = "${module.hyrax_vpc.vpc_id}-fedora"
   }
 }
 
 resource "aws_security_group" "solr" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Solr security group"
+  name   = "${module.hyrax_vpc.vpc_id}-solr"
 
   ingress {
     from_port = 0
@@ -68,13 +68,13 @@ resource "aws_security_group" "solr" {
   }
 
   tags {
-    Name = "${var.StackName}-solr"
+    Name = "${module.hyrax_vpc.vpc_id}-solr"
   }
 }
 
 resource "aws_security_group" "solr_lb" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Solr LB security group"
+  name   = "${module.hyrax_vpc.vpc_id}-solr_lb"
 
   ingress {
     from_port       = 80
@@ -84,13 +84,13 @@ resource "aws_security_group" "solr_lb" {
   }
 
   tags {
-    Name = "${var.StackName}-solr-lb"
+    Name = "${module.hyrax_vpc.vpc_id}-solr_lb"
   }
 }
 
 resource "aws_security_group" "solr_to_lb" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
-  name   = "Solr instance to LB security group"
+  name   = "${module.hyrax_vpc.vpc_id}-solr_to_lb"
 
   ingress {
     from_port       = 80
@@ -100,12 +100,12 @@ resource "aws_security_group" "solr_to_lb" {
   }
 
   tags {
-    Name = "${var.StackName}-solr-to-lb"
+    Name = "${module.hyrax_vpc.vpc_id}-solr_to_lb"
   }
 }
 
 resource "aws_security_group" "zookeeper_lb" {
-  name   = "Zookeeper LB security group"
+  name   = "${module.hyrax_vpc.vpc_id}-zookeeper_lb"
   vpc_id = "${module.hyrax_vpc.vpc_id}"
 
   ingress {
@@ -116,12 +116,12 @@ resource "aws_security_group" "zookeeper_lb" {
   }
 
   tags {
-    Name = "${var.StackName}-zookeeper-lb"
+    Name = "${module.hyrax_vpc.vpc_id}-zookeeper_lb"
   }
 }
 
 resource "aws_security_group" "zookeeper" {
-  name   = "Zookeeper security group"
+  name   = "${module.hyrax_vpc.vpc_id}-zookeeper"
   vpc_id = "${module.hyrax_vpc.vpc_id}"
 
   ingress {
@@ -146,6 +146,6 @@ resource "aws_security_group" "zookeeper" {
   }
 
   tags {
-    Name = "${var.StackName}-zookeeper"
+    Name = "${module.hyrax_vpc.vpc_id}-zookeeper"
   }
 }

@@ -1,10 +1,10 @@
 resource "aws_ses_receipt_rule_set" "hyrax" {
-  rule_set_name = "hyrax-rule-set"
+  rule_set_name = "${var.application_domain}-rule-set"
 }
 
 resource "aws_ses_receipt_rule" "hyrax" {
-  name          = "hyrax-rule"
-  rule_set_name = "hyrax-rule-set"
+  name          = "${var.application_domain}-rule"
+  rule_set_name = "${var.application_domain}-rule-set"
   recipients    = ["${var.application_domain}"]
   enabled       = true
   scan_enabled  = true

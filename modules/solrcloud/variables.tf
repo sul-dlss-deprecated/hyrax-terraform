@@ -1,120 +1,44 @@
-variable StackName {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk environment"
+variable "application_name" {}
+
+variable "vpc_id" {}
+
+variable "subnets" {
+  description = ""
+  type = "list"
 }
 
-variable S3Bucket {
-  type        = "string"
-  description = "S3 bucket to the cfn deployment artifacts"
+variable "key_name" {}
+
+variable "hosted_zone_name" {}
+
+variable "hosted_zone_id" {}
+
+variable "zookeeper_environment_cname" {}
+
+variable "zookeeper_version_label" {}
+
+variable "zookeeper_lb_security_groups" {
+  description = ""
+  type = "list"
 }
 
-variable S3KeyPrefix {
-  type        = "string"
-  description = "S3 prefix to deployment artifacts"
+variable "zookeeper_instance_security_groups" {
+  description = ""
+  type = "list"
 }
 
-variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
-  description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
+variable "zookeeper_shared_configs_bucket_name" {}
+
+variable "solr_environment_cname" {}
+
+variable "solr_version_label" {}
+
+variable "solr_lb_security_groups" {
+  description = ""
+  type = "list"
 }
 
-variable SubnetID {
-  type        = "list"
-  description = "List of an existing subnet IDs to use for the auto scaling group"
+variable "solr_instance_security_groups" {
+  description = ""
+  type = "list"
 }
-
-variable HostedZoneName {
-  type        = "string"
-  description = "Route53 zone to create an alias in"
-}
-
-variable HostedZoneID {
-  type        = "string"
-  description = "Route53 zone to create an alias in"
-}
-
-variable ZookeeperEnsembleSize {
-  type        = "number"
-  description = "Desired number of instances"
-}
-
-variable ZookeeperEnsembleMaxSize {
-  type        = "number"
-  description = "Maximum number zk of instances"
-}
-
-variable ZookeeperSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable ZookeeperLBSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable ZookeeperHealthReportingSystemType {
-  type        = "string"
-  description = "Health reporting system"
-}
-
-variable ZookeeperS3Bucket {
-  type        = "string"
-  description = "Bucket with ZK source bundle"
-}
-
-variable ZookeeperS3Key {
-  type        = "string"
-  description = "Key for ZK source bundle"
-}
-
-variable ZookeeperInstanceType {
-  type        = "string"
-  description = "The EC2 instance type"
-}
-
-variable ZookeeperDNSRecordName {
-  type        = "string"
-  description = "Route53 record for zookeeper round robin"
-}
-
-variable SolrCloudSize {
-  type        = "number"
-  description = "Desired number solr of instances"
-}
-
-variable SolrCloudMaxSize {
-  type        = "number"
-  description = "Maximum number solr of instances"
-}
-
-variable SolrSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable SolrLBSecurityGroups {
-  type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
-}
-
-variable SolrHealthReportingSystemType {
-  type        = "string"
-  description = "Health reporting system"
-}
-
-variable SolrS3Bucket {
-  type        = "string"
-  description = "Bucket with ZK source bundle"
-}
-
-variable SolrS3Key {
-  type        = "string"
-  description = "Key for ZK source bundle"
-}
-
-variable SolrCloudInstanceType {
-  type        = "string"
-  description = "The EC2 instance type"
-}
-

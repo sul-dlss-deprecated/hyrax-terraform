@@ -21,6 +21,29 @@ module "hyrax_bastion" {
   key_name        = "${var.key_name}"
 }
 
+module "hyrax_solrcloud" {
+  source = "./modules/solrcloud"
+
+  vpc_id   = "${module.hyrax_vpc.vpc_id}"
+  subnets  = ["${module.hyrax_vpc.private_subnets}"]
+  key_name = "${var.key_name}"
+
+  application_name = "${aws_elastic_beanstalk_application.hyrax.name}"
+  hosted_zone_name = "${module.hyrax_vpc.private_hosted_zone_name}"
+  hosted_zone_id   = "${module.hyrax_vpc.private_hosted_zone_id}"
+
+  zookeeper_environment_cname          = "hyrax-zookeeper-demo"
+  zookeeper_version_label              = "${aws_elastic_beanstalk_application_version.zookeeper.name}"
+  zookeeper_lb_security_groups         = ["${aws_security_group.zookeeper_lb.id}"]
+  zookeeper_instance_security_groups   = ["${aws_security_group.zookeeper.id}"]
+  zookeeper_shared_configs_bucket_name = "zookeeper-shared-configs"
+
+  solr_environment_cname        = "hyrax-solr-demo"
+  solr_version_label            = "${aws_elastic_beanstalk_application_version.solr.name}"
+  solr_lb_security_groups       = ["${aws_security_group.solr_lb.id}"]
+  solr_instance_security_groups = ["${aws_security_group.solr.id}","${aws_security_group.solr_to_lb.id}"]
+}
+
 module "hyrax_database" {
   source = "modules/postgres"
 
@@ -72,39 +95,3 @@ module "hyrax_redis" {
 #  SlackWebhookToken   = "${var.SlackWebhookToken}"
 #  SlackWebhookChannel = "${var.SlackWebhookChannel}"
 #}
-
-module "hyrax_zookeeper" {
-  source = "modules/zookeeper"
-
-  application_name  = "${aws_elastic_beanstalk_application.hyrax.name}"
-  environment_name  = "zookeeper"
-  environment_cname = "hyrax-zookeeper-demo"
-
-  vpc_id  = "${module.hyrax_vpc.vpc_id}"
-  subnets = "${module.hyrax_vpc.private_subnets}"
-
-  key_name                   = "${var.KeyName}"
-  version_label              = "${aws_elastic_beanstalk_application_version.zookeeper.name}"
-  lb_security_groups         = ["${aws_security_group.zookeeper_lb.id}"]
-  instance_security_groups   = ["${aws_security_group.zookeeper.id}"]
-  hosted_zone_name           = "${var.private_hosted_zone_name}"
-  shared_configs_bucket_name = "zookeeper-shared-configs"
-}
-
-module "hyrax_solr" {
-  source = "modules/solr"
-
-  application_name  = "${aws_elastic_beanstalk_application.hyrax.name}"
-  environment_name  = "solr"
-  environment_cname = "hyrax-solr-demo"
-
-  vpc_id  = "${module.hyrax_vpc.vpc_id}"
-  subnets = "${module.hyrax_vpc.private_subnets}"
-
-  key_name                 = "${var.KeyName}"
-  version_label            = "${aws_elastic_beanstalk_application_version.solr.name}"
-  lb_security_groups       = ["${aws_security_group.solr_lb.id}"]
-  instance_security_groups = ["${aws_security_group.solr.id}","${aws_security_group.solr_to_lb.id}"]
-  hosted_zone_name         = "${var.private_hosted_zone_name}"
-  zookeeper_hosts          = "${module.hyrax_zookeeper.zookeeper_hosts}"
-}

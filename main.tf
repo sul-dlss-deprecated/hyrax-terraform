@@ -63,80 +63,21 @@ module "hyrax_fedora" {
   db_password              = "${var.fcrepo_db_password}"
 }
 
-module "hyrax_database" {
-  source = "modules/postgres"
-
-  StackName           = "${var.StackName}"
-  SubnetID            = "${module.hyrax_vpc.database_subnet_group}"
-  vpc_id              = "${module.hyrax_vpc.vpc_id}"
-
-  DatabaseName        = "${var.DatabaseName}"
-  MasterUsername      = "${var.DatabaseUsername}"
-  MasterUserPassword  = "${var.DatabasePassword}"
-  DBInstanceClass     = "${var.DatabaseInstanceType}"
-  AllocatedStorage    = "${var.DatabaseStorageSize}"
-  MultiAZDatabase     = "${var.DatabaseMultiAZ}"
-  SecurityGroupName   = "RDS security group"
-  AccessSecurityGroup = "${aws_security_group.webapp.id}"
-}
-
-module "hyrax_fcrepodb" {
-  source = "modules/postgres"
-
-  StackName           = "${var.StackName}"
-  SubnetID            = "${module.hyrax_vpc.database_subnet_group}"
-  vpc_id              = "${module.hyrax_vpc.vpc_id}"
-
-  DatabaseName        = "${var.FcrepoDatabaseName}"
-  MasterUsername      = "${var.FcrepoDatabaseUsername}"
-  MasterUserPassword  = "${var.FcrepoDatabasePassword}"
-  DBInstanceClass     = "${var.FcrepoDatabaseInstanceType}"
-  AllocatedStorage    = "${var.FcrepoDatabaseStorageSize}"
-  MultiAZDatabase     = "${var.FcrepoDatabaseMultiAZ}"
-  SecurityGroupName   = "Fedora RDS security group"
-  AccessSecurityGroup = "${aws_security_group.fedora.id}"
-}
-
-module "hyrax_redis" {
-  source = "modules/redis"
-
-  StackName           = "${var.StackName}"
-  SubnetID            = "${module.hyrax_vpc.elasticache_subnet_group}"
-  WebappSecurityGroup = "${aws_security_group.webapp.id}"
-  InstanceType        = "${var.RedisInstanceType}"
-  vpc_id              = "${module.hyrax_vpc.vpc_id}"
-}
-
-# TODO: Enable this once the rest of testing is done, for further debugging.
-#module "hyrax_slack" {
-#  source = "modules/slack"
-#
-#  SlackWebhookToken   = "${var.SlackWebhookToken}"
-#  SlackWebhookChannel = "${var.SlackWebhookChannel}"
-#}
-
-module "hyrax_fedora" {
-  source = "modules/fcrepo"
+module "hyrax_application" {
+  source = "./modules/application"
 
   application_name  = "${aws_elastic_beanstalk_application.hyrax.name}"
-  environment_name  = "fedora"
-  environment_cname = "hyrax-fedora-demo"
+  # environment_cname = "hyrax-demo"
 
-  vpc_id                 = "${module.hyrax_vpc.vpc_id}"
-  SubnetID               = "${module.hyrax_vpc.private_subnets}"
+  vpc_id  = "${module.hyrax_vpc.vpc_id}"
+  # subnets = "${module.hyrax_vpc.private_subnets}"
+  db_subnet_group_name = "${module.hyrax_vpc.database_subnet_group}"
 
-  KeyName                = "${var.KeyName}"
-  version_label          = "${aws_elastic_beanstalk_application_version.fedora.name}"
-  SecurityGroups         = ["${aws_security_group.default.id}","${aws_security_group.fedora.id}"]
-  WebappSecurityGroup    = "${aws_security_group.webapp.id}"
-  LBSecurityGroups       = ["${aws_security_group.fedora_lb.id}"]
-  MinSize                = "${var.FcrepoMinSize}"
-  MaxSize                = "${var.FcrepoMaxSize}"
-  HostedZoneName         = "${var.public_hosted_zone_name}"
-  InstanceType           = "${var.FcrepoInstanceType}"
-  RDSHostname            = "${module.hyrax_fcrepodb.EndpointAddress}"
-  RDSPort                = "${module.hyrax_fcrepodb.EndpointPort}"
-  RDSUsername            = "${var.FcrepoDatabaseUsername}"
-  RDSPassword            = "${var.FcrepoDatabasePassword}"
-  StackName              = "${var.StackName}-fcrepo"
+  key_name                 = "${var.key_name}"
+  # version_label            = "${aws_elastic_beanstalk_application_version.fedora.name}"
+  # hosted_zone_name         = "${module.hyrax_vpc.private_hosted_zone_name}"
+  # hosted_zone_id           = "${module.hyrax_vpc.private_hosted_zone_id}"
+  instance_security_groups = ["${aws_security_group.webapp.id}"]
+  # lb_security_groups       = ["${aws_security_group.webapp_lb.id}"]
+  db_password              = "${var.webapp_db_password}"
 }

@@ -11,7 +11,8 @@ resource "aws_security_group" "postgresql" {
   }
 
   tags {
-    Name = "${var.StackName}-${var.DatabaseName}db"
+    Name      = "${var.StackName}-${var.DatabaseName}db-sg"
+    Terraform = "true"
   }
 }
 
@@ -26,4 +27,9 @@ resource "aws_db_instance" "postgresql" {
   vpc_security_group_ids = ["${aws_security_group.postgresql.id}"]
   allocated_storage      = "${var.AllocatedStorage}"
   multi_az               = "${var.MultiAZDatabase}"
+
+  tags {
+    Name      = "${var.StackName}-${var.DatabaseName}db"
+    Terraform = "true"
+  }
 }

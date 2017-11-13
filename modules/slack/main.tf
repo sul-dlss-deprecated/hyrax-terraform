@@ -4,6 +4,11 @@
 # Create the SNS topic for our use.
 resource "aws_sns_topic" "slack" {
   name = "sns-slack"
+
+  tags {
+    Name      = "${var.StackName}-slack-sns"
+    Terraform = "true"
+  }
 }
 
 # Set the slack integration code.
@@ -15,6 +20,11 @@ resource "aws_lambda_function" "slack_integration" {
   role             = "${aws_iam_role.slack_integration.arn}"
   handler          = "index.handler"
   runtime          = "nodejs4.3"
+
+  tags {
+    Name      = "${var.StackName}-slack-lambda"
+    Terraform = "true"
+  }
 }
 
 # Allow the SNS topic the permission to run our slack integration.

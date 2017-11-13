@@ -11,7 +11,8 @@ resource "aws_security_group" "redis" {
   }
 
   tags {
-    Name = "${var.StackName}-redis"
+    Name      = "${var.StackName}-redis-sg"
+    Terraform = "true"
   }
 }
 
@@ -26,4 +27,9 @@ resource "aws_elasticache_replication_group" "redis" {
   replication_group_id          = "hyku-redis-cluster"
   replication_group_description = "Hyku redis stack using ElastiCache"
   port                          = "6379"
+
+  tags {
+    Name      = "${var.StackName}-redis-sg"
+    Terraform = "true"
+  }
 }

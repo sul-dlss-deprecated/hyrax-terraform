@@ -8,6 +8,11 @@ resource "aws_s3_bucket" "codepipeline" {
   versioning {
     enabled = true
   }
+
+  tags {
+    Name      = "${var.StackName}-codepipeline-s3"
+    Terraform = "true"
+  }
 }
 
 # Create the code pipeline that will take the source and release to the

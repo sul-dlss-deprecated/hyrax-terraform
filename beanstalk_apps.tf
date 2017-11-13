@@ -70,3 +70,23 @@ resource "aws_elastic_beanstalk_application_version" "fedora" {
 
   depends_on = ["aws_s3_bucket_object.fedora"]
 }
+
+resource "aws_s3_bucket_object" "webapp" {
+  bucket = "${aws_s3_bucket.beanstalk_source_bundles.id}"
+  key    = "webapp/webapp-0.0.1.zip"
+  source = "assets/webapp-0.0.1.zip"
+
+  tags {
+    Terraform = "true"
+  }
+}
+
+resource "aws_elastic_beanstalk_application_version" "webapp" {
+  name        = "0.0.1"
+  application = "${aws_elastic_beanstalk_application.hyrax.name}"
+  bucket      = "${aws_s3_bucket.beanstalk_source_bundles.id}"
+  key         = "${aws_s3_bucket_object.webapp.key}"
+  force_delete = true
+
+  depends_on = ["aws_s3_bucket_object.webapp"]
+}

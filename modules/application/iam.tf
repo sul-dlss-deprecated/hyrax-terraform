@@ -11,14 +11,13 @@ data "aws_iam_policy_document" "application_assume_role" {
 data "aws_iam_policy_document" "application_s3" {
   statement {
     actions   = ["s3:*"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.upload.name}"]
+    resources = ["arn:aws:s3:::${aws_s3_bucket.upload.id}"]
   }
 }
 
 resource "aws_iam_policy" "application" {
   name   = "application-policy"
-  role   = "${aws_iam_role.application.id}"
-  policy = "${data.aws_iam_policy_document.application_s3}"
+  policy = "${data.aws_iam_policy_document.application_s3.json}"
 }
 
 resource "aws_iam_role" "application" {
@@ -27,12 +26,17 @@ resource "aws_iam_role" "application" {
   assume_role_policy = "${data.aws_iam_policy_document.application_assume_role.json}"
 }
 
-resource "aws_iam_role_policy_attachment" "application-webtier" {
+resource "aws_iam_role_policy_attachment" "application_s3" {
+  role       = "${aws_iam_role.application.name}"
+  policy_arn = "${aws_iam_policy.application.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "application_webtier" {
   role       = "${aws_iam_role.application.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier"
 }
 
-resource "aws_iam_role_policy_attachment" "application-workertier" {
+resource "aws_iam_role_policy_attachment" "application_workertier" {
   role       = "${aws_iam_role.application.name}"
   policy_arn = "arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier"
 }

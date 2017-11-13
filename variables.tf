@@ -27,6 +27,10 @@ variable "fcrepo_db_password" {
   default = "changeme"
 }
 
+variable "webapp_db_password" {
+  default = "changeme"
+}
+
 variable KeyName {
   type        = "string"
   description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"

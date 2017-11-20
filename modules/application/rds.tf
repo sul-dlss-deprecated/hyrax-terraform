@@ -6,6 +6,6 @@ module "appdb" {
 
   name                   = "${var.db_name}"
   password               = "${var.db_password}"
-  security_group_name    = "${var.application_name}-postgres-app"
+  security_group_name    = "hyrax-postgres-app"
   access_security_groups = "${var.instance_security_groups}"
 }

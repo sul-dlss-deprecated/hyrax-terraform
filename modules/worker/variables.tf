@@ -1,152 +1,109 @@
-variable StackName {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk environment"
+variable "application_name" {
+  description = ""
 }
 
-variable ApplicationName {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk environment"
+variable "environment_name" {
+  description = ""
 }
 
-variable VersionLabel {
-  type        = "string"
-  description = "Name of the ElasticBeanstalk version"
+variable "version_label" {
+  description = ""
 }
 
-variable KeyName {
-  type        = "aws::ec2::keypair::keyname"
-  description = "Name of an existing EC2 KeyPair to enable SSH access to the ECS instances"
+variable "vpc_id" {
+  description = "VPC to create the resources in"
 }
 
-variable MinSize {
-  type        = "number"
-  description = "Minimum number of instances"
-}
-
-variable MaxSize {
-  type        = "number"
-  description = "Maximum number of instances"
-}
-
-variable PrivateSubnets {
-  type        = "list"
+variable "subnets" {
   description = "List of an existing subnet IDs to use for the auto scaling group"
-}
-
-variable SecurityGroups {
   type        = "list"
-  description = "A list of security groups, such as sg-a123fd85."
 }
 
-variable HostedZoneName {
-  type        = "string"
-  description = "Route53 zone to create an alias in"
+variable "security_groups" {
+  type        = "list"
+  description = "Security groups to access fedora instances"
+  default = []
 }
 
-variable SecretKeyBase {
-  type        = "string"
+variable "key_name" {
+  description = "Name of an existing EC2 KeyPair to enable SSH access to instances"
+}
+
+variable "min_size" {
+  description = "Minimum number of instances"
+  default = 1
+}
+
+variable "max_size" {
+  description = "Maximum number of instances"
+  default = 4
+}
+
+variable "instance_type" {
+  description = "The EC2 instance type"
+  default = "t2.small"
+}
+
+variable "rails_secret_key" {
   description = "Secret key for Rails"
 }
 
-  noecho      = "'true'"
-variable FcrepoUrl {
-  type        = "string"
+variable "fcrepo_url" {
   description = "URL to Fedora"
 }
 
-variable SolrUrl {
-  type        = "string"
+variable "solr_url" {
   description = "URL to Solr"
 }
 
-variable ZookeeperHosts {
-  type        = "string"
-  description = "A list of zookeeper host IP + ports"
-}
-
-variable RedisHost {
-  type        = "string"
+variable "redis_host" {
   description = "URL to Redis"
 }
 
-variable RedisPort {
-  type        = "string"
+variable "redis_port" {
   description = "Redis Port"
 }
 
-variable RDSDatabaseName {
-  type        = "string"
+variable "db_name" {
   description = "Database name"
 }
 
-variable RDSUsername {
-  type        = "string"
+variable "db_username" {
   description = "Username for Database"
 }
 
-variable RDSPassword {
-  type        = "string"
+variable "db_password" {
   description = "Password for Database"
 }
 
-  noecho      = "'true'"
-variable RDSHostname {
-  type        = "string"
+variable "db_hostname" {
   description = "Hostname for RDS Database"
 }
 
-variable RDSPort {
-  type        = "string"
+variable "db_port" {
   description = "Database Port"
 }
 
-variable QueuePrefix {
-  type        = "string"
-  description = "SQS Queue prefix"
-}
-
-variable DefaultQueue {
-  type        = "string"
-  description = "SQS Default Queue"
-}
-
-variable DefaultQueueName {
-  type        = "string"
-  description = "SQS Default Queue Name"
-}
-
-variable IamInstanceProfile {
-  type        = "string"
+variable "iam_instance_profile" {
   description = "ARN for an IAM profile to assign to the EC2 instances"
 }
 
-variable UploadBucket {
-  type        = "string"
-  description = "S3 Bucket to store uploaded files into"
+variable "sqs_queue_name" {
+  description = "SQS Default Queue"
 }
 
-variable InstanceType {
-  type        = "string"
-  description = "The EC2 instance type"
-}
+# variable "upload_bucket" {
+#   description = "S3 Bucket to store uploaded files into"
+# }
 
-variable HealthReportingSystemType {
-  type        = "string"
-  description = "Health reporting system"
-}
+# variable "beanstalk_sns_topic" {
+#   description = "SNS Topic for Beanstalk application to write change events to"
+# }
 
-variable BeanstalkSNSTopic {
-  type        = "string"
-  description = "SNS Topic for Beanstalk application to write change events to"
-}
-
-variable HoneybadgerApiKey {
-  type        = "string"
+variable "honeybadger_key" {
   description = "The api key for honeybadger.io"
 }
 
-variable LogzioKey {
-  type        = "string"
-  description = "The logz.io key"
+variable "honeybadger_env" {
+  description = "The api key for honeybadger.io"
 }
-

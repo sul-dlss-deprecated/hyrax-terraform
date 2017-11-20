@@ -2,6 +2,14 @@ variable "application_name" {
   description = ""
 }
 
+variable "environment_cname" {
+  default = "hyrax-webapp-demo"
+}
+
+variable "version_label" {
+  description = ""
+}
+
 variable "vpc_id" {
   description = "VPC identifier"
 }
@@ -13,6 +21,24 @@ variable "key_name" {
 variable "application_upload_bucket_name" {
   description = "Bucket name for the application upload endpoint"
   default = "hyrax-application-upload"
+}
+
+variable "public_subnets" {
+  description = ""
+  type = "list"
+}
+
+variable "private_subnets" {
+  description = ""
+  type = "list"
+}
+
+variable "hosted_zone_name" {
+  description = ""
+}
+
+variable "cache_subnet_group_name" {
+  description = "Cache subnet group name from VPC module"
 }
 
 variable "db_subnet_group_name" {
@@ -33,198 +59,31 @@ variable "instance_security_groups" {
   type = "list"
 }
 
-# variable WebappMinSize {
-#   type        = "string"
-#   description = "Minimum number of instances"
-# }
-#
-# variable WebappMaxSize {
-#   type        = "string"
-#   description = "Maximum number of instances"
-# }
-#
-# variable WorkerMinSize {
-#   type        = "string"
-#   description = "Minimum number of instances"
-# }
-#
-# variable WorkerMaxSize {
-#   type        = "string"
-#   description = "Maximum number of instances"
-# }
-#
-# variable PublicSubnets {
-#   type        = "list"
-#   description = "List of an existing subnet IDs to use for the load balancer"
-# }
-#
-# variable PrivateSubnets {
-#   type        = "list"
-#   description = "List of an existing subnet IDs to use for the auto scaling group"
-# }
-#
-# variable SecurityGroups {
-#   type        = "list"
-#   description = "A list of security groups, such as sg-a123fd85."
-# }
-#
-# variable LBSecurityGroups {
-#   type        = "list"
-#   description = "A list of security groups, such as sg-a123fd85."
-# }
-#
-# variable HostedZoneName {
-#   type        = "string"
-#   description = "Route53 zone to create an alias in"
-#   default     = "hydrainabox.org"
-# }
-#
-# variable SecretKeyBase {
-#   type        = "string"
-#   description = "Secret key for Rails"
-# }
-#
-# variable FcrepoUrl {
-#   type        = "string"
-#   description = "URL to Fedora"
-# }
-#
-# variable SolrUrl {
-#   type        = "string"
-#   description = "URL to Solr"
-# }
-#
-# variable ZookeeperHosts {
-#   type        = "string"
-#   description = "A list of zookeeper host IP + ports"
-# }
-#
-
-variable "cache_subnet_group_name" {
-  description = "Cache subnet group name from VPC module"
+variable "lb_security_groups" {
+  description = ""
+  type = "list"
 }
 
-# variable RedisHost {
-#   type        = "string"
-#   description = "URL to Redis"
-# }
-#
-# variable RedisPort {
-#   type        = "string"
-#   description = "Redis Port"
-# }
-#
-# variable RDSDatabaseName {
-#   type        = "string"
-#   description = "Database name"
-#   default     = "hybox"
-# }
-#
-# variable RDSUsername {
-#   type        = "string"
-#   description = "Username for Database"
-#   default     = "ebroot"
-# }
-#
-# variable RDSPassword {
-#   type        = "string"
-#   description = "Password for Database"
-# }
-#
-# variable RDSHostname {
-#   type        = "string"
-#   description = "Hostname for RDS Database"
-# }
-#
-# variable RDSPort {
-#   type        = "string"
-#   description = "Database Port"
-# }
-#
-# variable QueuePrefix {
-#   type        = "string"
-#   description = "SQS Queue prefix"
-#   default     = "hybox"
-# }
-#
-# variable WebappInstanceType {
-#   type        = "string"
-#   description = "The EC2 instance type"
-#   default     = "t2.large"
-# }
-#
-# variable WorkerInstanceType {
-#   type        = "string"
-#   description = "The EC2 instance type"
-#   default     = "t2.medium"
-# }
-#
-# variable WebappHealthReportingSystemType {
-#   type        = "string"
-#   description = "Health reporting system"
-# }
-#
-# variable WorkerHealthReportingSystemType {
-#   type        = "string"
-#   description = "Health reporting system"
-# }
-#
-# variable BeanstalkSNSTopic {
-#   type        = "string"
-#   description = "SNS Topic for Beanstalk application to write change events to"
-# }
-#
-# variable ContinuousDeployment {
-#   type        = "string"
-#   description = "Configure continuous deployment for the webapp and workers?"
-#   default     = "true"
-# }
-#
-# variable SSLCertificateId {
-#   type        = "string"
-#   description = "The Amazon Resource Name (ARN) of the SSL certificate"
-# }
-#
-# variable GoogleAnalyticsId {
-#   type        = "string"
-#   description = "The Google Analytics id, e.g UA-111111-1"
-# }
-#
-# variable EnableOpenSignup {
-#   type        = "string"
-#   description = "True to allow open self-signup, false to disable"
-#   default     = "true"
-# }
-#
-# variable DisableOpenTenantCreation {
-#   type        = "string"
-#   description = "True to restrict tenant creation to admins, false to open creation to any registered users"
-#   default     = "false"
-# }
-#
-# variable AccountInvitationFromEmail {
-#   type        = "string"
-#   description = "Email address from which account invitations are sent"
-#   default     = "hyku-invitations@example.com"
-# }
-#
-# variable ContactEmail {
-#   type        = "string"
-#   description = "Email address to which contact form messages are sent"
-# }
-#
-# variable GeonamesUsername {
-#   type        = "string"
-#   description = "The registered Geonames account name"
-#   default     = "jcoyne"
-# }
-#
-# variable HoneybadgerApiKey {
-#   type        = "string"
-#   description = "The api key for honeybadger.io"
-# }
-#
-# variable LogzioKey {
-#   type        = "string"
-#   description = "The logz.io key"
-# }
+variable "rails_secret_key" {
+  description = ""
+}
+
+variable "fcrepo_url" {
+  description = ""
+}
+
+variable "solr_url" {
+  description = ""
+}
+
+variable "ssl_certificate_id" {
+  description = ""
+}
+
+variable "honeybadger_key" {
+  description = ""
+}
+
+variable "honeybadger_env" {
+  description = "The api key for honeybadger.io"
+}

@@ -40,6 +40,15 @@ resource "aws_security_group" "webapp" {
   }
 }
 
+resource "aws_security_group" "webapp_lb" {
+  vpc_id = "${module.hyrax_vpc.vpc_id}"
+  name   = "${module.hyrax_vpc.vpc_id}-webapp-lb"
+
+  tags {
+    Name = "${module.hyrax_vpc.vpc_id}-webapp-lb"
+  }
+}
+
 resource "aws_security_group" "fedora" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
   name   = "${module.hyrax_vpc.vpc_id}-fedora"

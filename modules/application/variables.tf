@@ -99,6 +99,11 @@ variable "instance_security_groups" {
 #   description = "A list of zookeeper host IP + ports"
 # }
 #
+
+variable "cache_subnet_group_name" {
+  description = "Cache subnet group name from VPC module"
+}
+
 # variable RedisHost {
 #   type        = "string"
 #   description = "URL to Redis"

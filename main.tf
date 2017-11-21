@@ -72,6 +72,7 @@ module "hyrax_application" {
   vpc_id  = "${module.hyrax_vpc.vpc_id}"
   # subnets = "${module.hyrax_vpc.private_subnets}"
   db_subnet_group_name = "${module.hyrax_vpc.database_subnet_group}"
+  cache_subnet_group_name = "${module.hyrax_vpc.elasticache_subnet_group}"
 
   key_name                 = "${var.key_name}"
   # version_label            = "${aws_elastic_beanstalk_application_version.fedora.name}"

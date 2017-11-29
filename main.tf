@@ -4,14 +4,6 @@ module "hyrax_vpc" {
   private_hosted_zone_name = "${var.private_hosted_zone_name}"
 }
 
-module "hyrax_mail" {
-  source = "./modules/mail"
-
-  hosted_zone_name   = "${var.public_hosted_zone_name}"
-  application_domain = "hyrax.${var.public_hosted_zone_name}"
-  mail_bucket_name   = "hyrax-mail"
-}
-
 module "hyrax_bastion" {
   source = "./modules/bastion"
 

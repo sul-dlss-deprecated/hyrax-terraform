@@ -77,5 +77,5 @@ module "hyrax_application" {
   solr_url                 = "${module.hyrax_solrcloud.solr_url}"
   ssl_certificate_id       = "${var.ssl_certificate_id}"
   honeybadger_key          = "${var.hydrox_honeybadger_key}"
-  honeybadger_env          = "development"
+  honeybadger_env          = "demo"
 }

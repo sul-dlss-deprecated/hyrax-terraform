@@ -29,4 +29,7 @@ module "webapp" {
   ssl_certificate_id       = "${var.ssl_certificate_id}"
   honeybadger_key          = "${var.honeybadger_key}"
   honeybadger_env          = "${var.honeybadger_env}"
+  suri_url                 = "${var.suri_url}"
+  suri_username            = "${var.suri_username}"
+  suri_password            = "${var.suri_password}"
 }

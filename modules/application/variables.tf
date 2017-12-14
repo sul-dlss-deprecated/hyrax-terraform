@@ -87,3 +87,15 @@ variable "honeybadger_key" {
 variable "honeybadger_env" {
   description = "The api key for honeybadger.io"
 }
+
+variable "suri_url" {
+  description = "The url for suri"
+}
+
+variable "suri_username" {
+  description = ""
+}
+
+variable "suri_password" {
+  description = ""
+}

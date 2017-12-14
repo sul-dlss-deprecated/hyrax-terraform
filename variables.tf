@@ -42,3 +42,15 @@ variable "ssl_certificate_id" {
 variable "hydrox_honeybadger_key" {
   description = ""
 }
+
+variable "suri_url" {
+  description = ""
+}
+
+variable "suri_username" {
+  description = ""
+}
+
+variable "suri_password" {
+  description = ""
+}

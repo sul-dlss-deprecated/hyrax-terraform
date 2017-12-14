@@ -235,6 +235,24 @@ resource "aws_elastic_beanstalk_environment" "webapp" {
   }
 
   setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SURI_SERVICE_URL"
+    value     = "${var.suri_url}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SURI_USERNAME"
+    value     = "${var.suri_username}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "SURI_PASSWORD"
+    value     = "${var.suri_password}"
+  }
+
+  setting {
     namespace = "aws:elb:loadbalancer"
     name      = "SecurityGroups"
     value     = "${join(",", sort(var.lb_security_groups))}"

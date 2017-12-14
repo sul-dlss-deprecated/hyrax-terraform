@@ -78,4 +78,7 @@ module "hyrax_application" {
   ssl_certificate_id       = "${var.ssl_certificate_id}"
   honeybadger_key          = "${var.hydrox_honeybadger_key}"
   honeybadger_env          = "demo"
+  suri_url                 = "${var.suri_url}"
+  suri_username            = "${var.suri_username}"
+  suri_password            = "${var.suri_password}"
 }

@@ -71,6 +71,7 @@ module "hyrax_application" {
   hosted_zone_name         = "${var.public_hosted_zone_name}"
   instance_security_groups = ["${aws_security_group.webapp.id}"]
   lb_security_groups       = ["${aws_security_group.webapp_lb.id}"]
+  efs_security_group       = ["${aws_security_group.webapp_efs.id}"]
   db_password              = "${var.webapp_db_password}"
   rails_secret_key         = "${var.rails_secret_key}"
   fcrepo_url               = "${module.hyrax_fedora.url}"

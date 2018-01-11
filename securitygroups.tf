@@ -49,6 +49,22 @@ resource "aws_security_group" "webapp_lb" {
   }
 }
 
+resource "aws_security_group" "webapp_efs" {
+  vpc_id = "${module.hyrax_vpc.vpc_id}"
+  name   = "${module.hyrax_vpc.vpc_id}-webapp-efs"
+
+  ingress {
+    security_groups = ["${aws_security_group.webapp.id}"]
+    from_port       = 2049
+    to_port         = 2049
+    protocol        = "tcp"
+  }
+
+  tags {
+    Name = "${module.hyrax_vpc.vpc_id}-webapp-efs"
+  }
+}
+
 resource "aws_security_group" "fedora" {
   vpc_id = "${module.hyrax_vpc.vpc_id}"
   name   = "${module.hyrax_vpc.vpc_id}-fedora"

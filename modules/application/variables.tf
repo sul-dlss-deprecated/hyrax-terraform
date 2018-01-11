@@ -64,6 +64,11 @@ variable "lb_security_groups" {
   type = "list"
 }
 
+variable "efs_security_groups" {
+  description = ""
+  type = "list"
+}
+
 variable "rails_secret_key" {
   description = ""
 }

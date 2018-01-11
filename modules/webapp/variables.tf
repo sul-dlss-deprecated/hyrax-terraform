@@ -107,22 +107,6 @@ variable "iam_instance_profile" {
   description = "ARN for an IAM profile to assign to the EC2 instances"
 }
 
-# variable "queue_prefix" {
-#   description = "SQS Queue prefix"
-# }
-
-# variable "default_queue" {
-#   description = "SQS Default Queue"
-# }
-
-# variable "upload_bucket" {
-#   description = "S3 Bucket to store uploaded files into"
-# }
-
-# variable "beanstalk_sns_topic" {
-#   description = "SNS Topic for Beanstalk application to write change events to"
-# }
-
 variable "ssl_certificate_id" {
   description = "The Amazon Resource Name (ARN) of the SSL certificate"
 }
@@ -149,5 +133,13 @@ variable "suri_username" {
 }
 
 variable "suri_password" {
+  description = ""
+}
+
+variable "efs_filesystem" {
+  description = ""
+}
+
+variable "efs_mount_path" {
   description = ""
 }

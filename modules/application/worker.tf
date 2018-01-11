@@ -24,4 +24,6 @@ module "worker" {
   sqs_queue_name           = "${aws_sqs_queue.default.id}"
   honeybadger_key          = "${var.honeybadger_key}"
   honeybadger_env          = "${var.honeybadger_env}"
+  efs_filesystem           = "${aws_efs_file_system.hyrax.id}"
+  efs_mount_path           = "${var.efs_mount_path}"
 }

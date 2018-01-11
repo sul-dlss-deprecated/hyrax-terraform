@@ -104,3 +104,7 @@ variable "suri_username" {
 variable "suri_password" {
   description = ""
 }
+
+variable "efs_mount_path" {
+  description = ""
+}

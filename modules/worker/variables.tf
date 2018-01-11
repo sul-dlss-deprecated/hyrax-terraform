@@ -92,18 +92,18 @@ variable "sqs_queue_name" {
   description = "SQS Default Queue"
 }
 
-# variable "upload_bucket" {
-#   description = "S3 Bucket to store uploaded files into"
-# }
-
-# variable "beanstalk_sns_topic" {
-#   description = "SNS Topic for Beanstalk application to write change events to"
-# }
-
 variable "honeybadger_key" {
   description = "The api key for honeybadger.io"
 }
 
 variable "honeybadger_env" {
   description = "The api key for honeybadger.io"
+}
+
+variable "efs_filesystem" {
+  description = ""
+}
+
+variable "efs_mount_path" {
+  description = ""
 }

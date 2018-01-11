@@ -32,4 +32,6 @@ module "webapp" {
   suri_url                 = "${var.suri_url}"
   suri_username            = "${var.suri_username}"
   suri_password            = "${var.suri_password}"
+  efs_filesystem           = "${aws_efs_file_system.hyrax.id}"
+  efs_mount_path           = "${var.efs_mount_path}"
 }

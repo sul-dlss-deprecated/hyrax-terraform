@@ -194,6 +194,12 @@ resource "aws_elastic_beanstalk_environment" "worker" {
 
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "FILE_SYSTEM_ID"
+    value     = "${var.efs_filesystem}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
     name      = "HONEYBADGER_API_KEY"
     value     = "${var.honeybadger_key}"
   }
@@ -202,6 +208,12 @@ resource "aws_elastic_beanstalk_environment" "worker" {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "HONEYBADGER_ENV"
     value     = "${var.honeybadger_env}"
+  }
+
+  setting {
+    namespace = "aws:elasticbeanstalk:application:environment"
+    name      = "MOUNT_DIRECTORY"
+    value     = "${var.efs_mount_path}"
   }
 
   setting {
